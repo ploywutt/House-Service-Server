@@ -1,0 +1,63 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table category {
+  id Int [pk, increment]
+  name String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  category_on_product category_on_product [not null]
+}
+
+Table category_on_product {
+  id Int [pk, increment]
+  productId Int [not null]
+  categoryId Int [not null]
+  category category [not null]
+  products products [not null]
+}
+
+Table product_on_cart {
+  id Int [pk, increment]
+  cartId Int [not null]
+  productId Int [not null]
+  user_cart user_cart [not null]
+  products products [not null]
+}
+
+Table products {
+  id Int [pk, increment]
+  name String
+  price Float [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  category_on_product category_on_product [not null]
+  product_on_cart product_on_cart [not null]
+}
+
+Table user {
+  id Int [pk, increment]
+  username String [unique, not null]
+  password String [not null]
+  createAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [default: `now()`, not null]
+  user_cart user_cart [not null]
+}
+
+Table user_cart {
+  id Int [pk, increment]
+  userId Int [not null]
+  product_on_cart product_on_cart [not null]
+  user user [not null]
+}
+
+Ref: category_on_product.categoryId > category.id
+
+Ref: category_on_product.productId > products.id
+
+Ref: product_on_cart.cartId > user_cart.id
+
+Ref: product_on_cart.productId > products.id
+
+Ref: user_cart.userId > user.id
