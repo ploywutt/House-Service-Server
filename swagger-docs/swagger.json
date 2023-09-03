@@ -11,10 +11,10 @@
     "http"
   ],
   "paths": {
-    "/products/": {
+    "/v1/admin/products/": {
       "get": {
         "tags": [
-          "Products"
+          "Admin/Products"
         ],
         "summary": "Get all products",
         "description": "",
@@ -26,7 +26,7 @@
       },
       "post": {
         "tags": [
-          "Products"
+          "Admin/Products"
         ],
         "summary": "Create products",
         "description": "",
@@ -54,10 +54,46 @@
         }
       }
     },
-    "/products/{id}": {
+    "/v1/admin/products/{id}": {
       "get": {
         "tags": [
-          "Products"
+          "Admin/Products"
+        ],
+        "summary": "Get products by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get all products",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/{id}": {
+      "get": {
+        "tags": [
+          "User/Products"
         ],
         "summary": "Get products by id",
         "description": "",
