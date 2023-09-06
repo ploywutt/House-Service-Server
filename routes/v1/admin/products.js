@@ -1,23 +1,68 @@
 import { Router } from "express";
-
+import { prisma } from "../../../lib/db.js";
 const router = new Router();
 
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   // #swagger.tags = ["Admin/Products"]
   // #swagger.summary = "Get all products"
-  res.send("Hello, world!");
+  try {
+    const allCategory = await prisma.categories.findMany()
+    res.json({
+      data : allCategory
+    });
+  } catch (error) { 
+    console.error(error)
+  }
+
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", async (req, res) => {
   // #swagger.tags = ["Admin/Products"]
   // #swagger.summary = "Get products by id"
-  res.send("Hello, world!");
+  const categoryId = Number(req.params.id)
+  try {
+    const category = await prisma.categories.findUnique({
+      where: {
+        id: categoryId
+      }
+    })
+
+    res.json({
+      data: category
+    })
+  } catch (error) {
+    console.error(error)
+  }
 });
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   // #swagger.tags = ["Admin/Products"]
   // #swagger.summary = "Create products"
-  const { name, price } = req.body;
-  res.send("Hello, world!");
+  const { category_name } = req.body; // Extract the category_name from the request body
+  try {
+    // Ensure category_name is a string before passing it to prisma.categories.create()
+    if (typeof category_name === 'string') {
+      await prisma.categories.create({
+        data: {
+          category_name: category_name,
+        }
+      })
+
+      res.json({
+        message: "create category success"
+      })
+    } else {
+      // Handle the case where category_name is not a string (e.g., provide an error response)
+      res.status(400).json({
+        error: "category_name must be a string"
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      error: "Internal server error"
+    });
+  }
 });
+
 export default router;
