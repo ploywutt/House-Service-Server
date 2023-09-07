@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
 		// check if email already exists
 		const existingUserByEmailOrPhone = await prisma.customer_profile.findUnique({
 			where: {
-				OR: [{ email: email }, { phone:phone }]
+				email: email
 			},
 		});
 		if (existingUserByEmailOrPhone) {
