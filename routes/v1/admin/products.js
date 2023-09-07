@@ -65,4 +65,8 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get('/customer_profile', async(req, res) => {
+  
+})
+
 export default router;
