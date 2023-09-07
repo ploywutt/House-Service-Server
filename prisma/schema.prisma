@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 generator docs {
@@ -38,9 +39,10 @@ model Services {
   id            Int         @id @default(autoincrement())
   service_name  String
   category_id   Int
-  category      Categories   @relation(fields: [category_id], references: [id])
+  category      Categories   @relation(fields: [category_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  sub_services  Sub_services[]
   pic_service   String
-  createAt      DateTime    @default(now()) @db.Date
+  createAt      DateTime    @default(now()) 
   updateAt      DateTime    @updatedAt
 }
 
@@ -48,6 +50,15 @@ model Categories {
   id              Int         @id @default(autoincrement())
   services        Services[]
   category_name   String
-  createAt        DateTime    @default(now())
-  updateAt        DateTime    @updatedAt @default(now())
+  createAt        DateTime    @default(now()) 
+  updateAt        DateTime    @updatedAt 
+}
+
+model Sub_services {
+  id              Int        @id @default(autoincrement())
+  service_id      Int
+  services        Services   @relation(fields: [service_id], references: [id], onUpdate: Cascade)
+  sub_service_name  String
+  price_per_unit  Int
+  unit            String
 }

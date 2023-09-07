@@ -5,6 +5,7 @@ const router = new Router();
 router.get("/", async (req, res) => {
   // #swagger.tags = ["Admin/Products"]
   // #swagger.summary = "Get all products"
+  
   try {
     const allCategory = await prisma.categories.findMany()
     res.json({
@@ -65,8 +66,33 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get('/customer_profile', async(req, res) => {
-  
+router.delete('/:id', async (req, res) => {
+  const categoryId = Number(req.params.id)
+  try {
+    const existCategoryId = await prisma.categories.findUnique({
+      where: {
+        id: categoryId
+      }
+    })
+    if (!existCategoryId) {
+      res.json({
+        category_id: null,
+        message: `Not found category_id: ${categoryId}`
+      })
+    } else {
+      await prisma.categories.delete({
+        where: {
+          id: categoryId
+        }
+      })
+    }
+
+    res.json({
+      message: `Delete category id: ${categoryId} successfull`
+    })
+  } catch (error) {
+    console.error(error)
+  }
 })
 
 export default router;

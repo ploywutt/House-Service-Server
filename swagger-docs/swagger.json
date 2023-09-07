@@ -11,7 +11,7 @@
     "http"
   ],
   "paths": {
-    "/v1/admin/products/": {
+    "/v1/admin/categories/": {
       "get": {
         "tags": [
           "Admin/Products"
@@ -57,7 +57,7 @@
         }
       }
     },
-    "/v1/admin/products/{id}": {
+    "/v1/admin/categories/{id}": {
       "get": {
         "tags": [
           "Admin/Products"
@@ -77,10 +77,56 @@
             "description": "OK"
           }
         }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
       }
     },
-    "/v1/admin/products/customer_profile": {
+    "/v1/admin/services/": {
       "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/admin/services/create_service": {
+      "post": {
         "description": "",
         "responses": {
           "default": {
