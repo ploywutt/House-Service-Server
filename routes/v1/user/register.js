@@ -9,16 +9,37 @@ router.post("/", async (req, res) => {
 		const { name, phone, email, password } = req.body;
 
 		// check if email already exists
-		const existingUserByEmailOrPhone = await prisma.customer_profile.findUnique({
+		const existingUserByEmail = await prisma.customer_profile.findUnique({
 			where: {
 				email: email
 			},
 		});
-		if (existingUserByEmailOrPhone) {
+		const existingUserByPhone = await prisma.customer_profile.findUnique({
+			where: {
+				phone: phone
+			},
+		});
+		if (existingUserByEmail && existingUserByPhone) {
 			return res.status(409).json(
 				{
 					user: null,
-					message: "User with this email or phone number already",
+					message: "User with these email and phone number already",
+				}
+			);
+		}
+		else if (existingUserByPhone) {
+			return res.status(409).json(
+				{
+					user: null,
+					message: "User with this phone number already",
+				}
+			);
+		}
+		else if (existingUserByEmail) {
+			return res.status(409).json(
+				{
+					user: null,
+					message: "User with this email already",
 				}
 			);
 		}
