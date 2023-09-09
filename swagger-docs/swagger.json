@@ -135,6 +135,26 @@
         }
       }
     },
+    "/v1/admin/login/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
     "/v1/user/products/": {
       "get": {
         "tags": [
