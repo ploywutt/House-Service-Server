@@ -3,6 +3,8 @@ import { prisma } from "../../../lib/db.js";
 const router = new Router();
 
 router.get('/', async (req, res) => {
+	// #swagger.tags = ["Admin/Service"]
+  // #swagger.summary = "Get all services"
 	const search = req.query.search || ''
 	const category = req.query.category || ''
 	const sort = req.query.sort || ''
@@ -47,8 +49,8 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.post('/create_service', async (req, res) => {
-
+router.post('/create', async (req, res) => {
+	
 })
 
 export default router;

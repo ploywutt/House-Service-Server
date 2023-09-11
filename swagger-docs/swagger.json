@@ -5,7 +5,7 @@
     "version": "0.0.1",
     "description": ""
   },
-  "host": "http://localhost:4000",
+  "host": "localhost:4000",
   "basePath": "/",
   "schemes": [
     "http"
@@ -14,9 +14,9 @@
     "/v1/admin/categories/": {
       "get": {
         "tags": [
-          "Admin/Products"
+          "Admin/Category"
         ],
-        "summary": "Get all products",
+        "summary": "Get all categories",
         "description": "",
         "responses": {
           "200": {
@@ -26,9 +26,9 @@
       },
       "post": {
         "tags": [
-          "Admin/Products"
+          "Admin/Category"
         ],
-        "summary": "Create products",
+        "summary": "Create categories",
         "description": "",
         "parameters": [
           {
@@ -60,9 +60,9 @@
     "/v1/admin/categories/{id}": {
       "get": {
         "tags": [
-          "Admin/Products"
+          "Admin/Category"
         ],
-        "summary": "Get products by id",
+        "summary": "Get categories by id",
         "description": "",
         "parameters": [
           {
@@ -79,6 +79,10 @@
         }
       },
       "delete": {
+        "tags": [
+          "Admin/Category"
+        ],
+        "summary": "Delete categories by id",
         "description": "",
         "parameters": [
           {
@@ -97,6 +101,10 @@
     },
     "/v1/admin/services/": {
       "get": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Get all services",
         "description": "",
         "parameters": [
           {
@@ -125,7 +133,7 @@
         }
       }
     },
-    "/v1/admin/services/create_service": {
+    "/v1/admin/services/create": {
       "post": {
         "description": "",
         "responses": {
@@ -193,6 +201,10 @@
     },
     "/register/": {
       "post": {
+        "tags": [
+          "User/Register"
+        ],
+        "summary": "Create user profile",
         "description": "",
         "parameters": [
           {

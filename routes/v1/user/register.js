@@ -5,6 +5,8 @@ import { hash } from "bcrypt";
 const router = new Router();
 
 router.post("/", async (req, res) => {
+	// #swagger.tags = ["User/Register"]
+  // #swagger.summary = "Create user profile"
 	try {
 		const { name, phone, email, password } = req.body;
 

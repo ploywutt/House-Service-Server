@@ -3,8 +3,8 @@ import { prisma } from "../../../lib/db.js";
 const router = new Router();
 
 router.get("/", async (req, res) => {
-  // #swagger.tags = ["Admin/Products"]
-  // #swagger.summary = "Get all products"
+  // #swagger.tags = ["Admin/Category"]
+  // #swagger.summary = "Get all categories"
   
   try {
     const allCategory = await prisma.categories.findMany()
@@ -18,8 +18,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  // #swagger.tags = ["Admin/Products"]
-  // #swagger.summary = "Get products by id"
+  // #swagger.tags = ["Admin/Category"]
+  // #swagger.summary = "Get categories by id"
   const categoryId = Number(req.params.id)
   try {
     const category = await prisma.categories.findUnique({
@@ -37,8 +37,8 @@ router.get("/:id", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  // #swagger.tags = ["Admin/Products"]
-  // #swagger.summary = "Create products"
+  // #swagger.tags = ["Admin/Category"]
+  // #swagger.summary = "Create categories"
   const { category_name } = req.body; // Extract the category_name from the request body
   try {
     // Ensure category_name is a string before passing it to prisma.categories.create()
@@ -67,6 +67,8 @@ router.post("/", async (req, res) => {
 });
 
 router.delete('/:id', async (req, res) => {
+  // #swagger.tags = ["Admin/Category"]
+  // #swagger.summary = "Delete categories by id"
   const categoryId = Number(req.params.id)
   try {
     const existCategoryId = await prisma.categories.findUnique({
