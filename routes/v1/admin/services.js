@@ -44,7 +44,6 @@ router.get("/", async (req, res) => {
 			...service,
 			category: service.category.category_name,
 		}));
-
 		res.json({
 			data: listServices,
 			totalServices: serviceCount,
