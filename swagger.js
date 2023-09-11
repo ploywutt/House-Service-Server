@@ -8,7 +8,7 @@ const doc = {
     title: "House Service API Documentation",
     version: "0.0.1",
   },
-  host: "http://localhost:4000",
+  host: "localhost:4000",
 };
 
 swagger(file, endpoint, doc).then(() => {

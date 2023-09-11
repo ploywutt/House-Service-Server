@@ -49,8 +49,8 @@ router.get('/', async (req, res) => {
 	}
 })
 
-router.post('/create_service', async (req, res) => {
-
+router.post('/create', async (req, res) => {
+	
 })
 
 export default router;
