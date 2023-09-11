@@ -121,6 +121,16 @@
             "name": "sort",
             "in": "query",
             "type": "string"
+          },
+          {
+            "name": "price",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "type": "string"
           }
         ],
         "responses": {
