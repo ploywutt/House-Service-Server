@@ -88,7 +88,6 @@ router.delete("/:id", async (req, res) => {
 	// #swagger.summary = "Delete categories by id"
 	const categoryId = Number(req.params.id);
 	try {
-    console.log(categoryId)
 		const existCategoryId = await prisma.categories.findUnique({
 			where: {
 				id: categoryId,
@@ -116,23 +115,20 @@ router.delete("/:id", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
 	// #swagger.tags = ["Admin/Category"]
-	// #swagger.summary = "Update categories by id"
+	// #swagger.summary = "Update categorie by id"
 	const categoryId = Number(req.params.id);
   try { 
-    console.log("122 >>>", categoryId)
     const existCategoryId = await prisma.categories.findUnique({
       where: {
         id: categoryId,
 			},
 		});
-    console.log("128 >>>", categoryId)
     if (!existCategoryId) {
       res.status(400).json({
         category_id: null,
 				message: `Not found category_id: ${categoryId}`,
 			});
 		} else {
-      console.log("135 >>>", categoryId)
       const currentTime = new Date(req.body.updateAt)
       await prisma.categories.update({
         where: {
