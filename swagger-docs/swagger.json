@@ -109,7 +109,7 @@
         "tags": [
           "Admin/Category"
         ],
-        "summary": "Update categories by id",
+        "summary": "Update categorie by id",
         "description": "",
         "parameters": [
           {
@@ -183,14 +183,64 @@
             "description": "Bad Request"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Create services",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "service_name": {
+                  "example": "any"
+                },
+                "category_name": {
+                  "example": "any"
+                },
+                "pic_service": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
-    "/v1/admin/services/create": {
-      "post": {
+    "/v1/admin/services/{id}": {
+      "delete": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Delete service by id",
         "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
