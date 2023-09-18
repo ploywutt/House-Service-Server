@@ -343,6 +343,16 @@
           }
         }
       }
+    },
+    "/v1/user/subservices/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }

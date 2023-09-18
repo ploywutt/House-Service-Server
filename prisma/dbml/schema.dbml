@@ -25,28 +25,28 @@ Table Services {
   id Int [pk, increment]
   service_name String [not null]
   category_id Int [not null]
-  category Categories [not null]
-  sub_services Sub_services [not null]
   pic_service String [not null]
   createAt DateTime [default: `now()`, not null]
   updateAt DateTime [not null]
+  category Categories [not null]
+  sub_services Sub_services [not null]
 }
 
 Table Categories {
   id Int [pk, increment]
-  services Services [not null]
   category_name String [not null]
   createAt DateTime [default: `now()`, not null]
   updateAt DateTime [not null]
+  services Services [not null]
 }
 
 Table Sub_services {
   id Int [pk, increment]
   service_id Int [not null]
-  services Services [not null]
   sub_service_name String [not null]
   price_per_unit Int [not null]
   unit String [not null]
+  services Services [not null]
 }
 
 Ref: Services.category_id > Categories.id [delete: Cascade]
