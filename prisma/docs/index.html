@@ -88,7 +88,7 @@
                   <div class="mt-1 ml-2">
                     <div class="mb-1 font-medium text-gray-600"><a href="#model-Services-fields">Fields</a></div>
                       <ul class="pl-3 ml-1 border-l-2 border-gray-400">
-                      <li><a href="#model-Services-id">id</a></li><li><a href="#model-Services-service_name">service_name</a></li><li><a href="#model-Services-category_id">category_id</a></li><li><a href="#model-Services-category">category</a></li><li><a href="#model-Services-sub_services">sub_services</a></li><li><a href="#model-Services-pic_service">pic_service</a></li><li><a href="#model-Services-createAt">createAt</a></li><li><a href="#model-Services-updateAt">updateAt</a></li>
+                      <li><a href="#model-Services-id">id</a></li><li><a href="#model-Services-service_name">service_name</a></li><li><a href="#model-Services-category_id">category_id</a></li><li><a href="#model-Services-pic_service">pic_service</a></li><li><a href="#model-Services-createAt">createAt</a></li><li><a href="#model-Services-updateAt">updateAt</a></li><li><a href="#model-Services-category">category</a></li><li><a href="#model-Services-sub_services">sub_services</a></li>
                       </ul>
                   </div>
                   <div class="mt-2 ml-2">
@@ -108,7 +108,7 @@
                   <div class="mt-1 ml-2">
                     <div class="mb-1 font-medium text-gray-600"><a href="#model-Categories-fields">Fields</a></div>
                       <ul class="pl-3 ml-1 border-l-2 border-gray-400">
-                      <li><a href="#model-Categories-id">id</a></li><li><a href="#model-Categories-services">services</a></li><li><a href="#model-Categories-category_name">category_name</a></li><li><a href="#model-Categories-createAt">createAt</a></li><li><a href="#model-Categories-updateAt">updateAt</a></li>
+                      <li><a href="#model-Categories-id">id</a></li><li><a href="#model-Categories-category_name">category_name</a></li><li><a href="#model-Categories-createAt">createAt</a></li><li><a href="#model-Categories-updateAt">updateAt</a></li><li><a href="#model-Categories-services">services</a></li>
                       </ul>
                   </div>
                   <div class="mt-2 ml-2">
@@ -128,7 +128,7 @@
                   <div class="mt-1 ml-2">
                     <div class="mb-1 font-medium text-gray-600"><a href="#model-Sub_services-fields">Fields</a></div>
                       <ul class="pl-3 ml-1 border-l-2 border-gray-400">
-                      <li><a href="#model-Sub_services-id">id</a></li><li><a href="#model-Sub_services-service_id">service_id</a></li><li><a href="#model-Sub_services-services">services</a></li><li><a href="#model-Sub_services-sub_service_name">sub_service_name</a></li><li><a href="#model-Sub_services-price_per_unit">price_per_unit</a></li><li><a href="#model-Sub_services-unit">unit</a></li>
+                      <li><a href="#model-Sub_services-id">id</a></li><li><a href="#model-Sub_services-service_id">service_id</a></li><li><a href="#model-Sub_services-sub_service_name">sub_service_name</a></li><li><a href="#model-Sub_services-price_per_unit">price_per_unit</a></li><li><a href="#model-Sub_services-unit">unit</a></li><li><a href="#model-Sub_services-services">services</a></li>
                       </ul>
                   </div>
                   <div class="mt-2 ml-2">
@@ -1764,46 +1764,6 @@
       </td>
     </tr>
     
-    <tr id="model-Services-category">
-      <td class="px-4 py-2 border">
-       category 
-      </td>
-      <td class="px-4 py-2 border">
-       <a href="#type-outputType-Categories">Categories</a>
-      </td>
-      <td class="px-4 py-2 border">
-        <ul>
-          <li> - </li>
-        </ul>
-      </td>
-      <td class="px-4 py-2 border">
-        <strong>Yes</strong>
-      </td>
-      <td class="px-4 py-2 border">
-        -
-      </td>
-    </tr>
-    
-    <tr id="model-Services-sub_services">
-      <td class="px-4 py-2 border">
-       sub_services 
-      </td>
-      <td class="px-4 py-2 border">
-       <a href="#type-outputType-Sub_services">Sub_services[]</a>
-      </td>
-      <td class="px-4 py-2 border">
-        <ul>
-          <li> - </li>
-        </ul>
-      </td>
-      <td class="px-4 py-2 border">
-        <strong>Yes</strong>
-      </td>
-      <td class="px-4 py-2 border">
-        -
-      </td>
-    </tr>
-    
     <tr id="model-Services-pic_service">
       <td class="px-4 py-2 border">
        pic_service 
@@ -1854,6 +1814,46 @@
       <td class="px-4 py-2 border">
         <ul>
           <li><strong>@updatedAt</strong></li>
+        </ul>
+      </td>
+      <td class="px-4 py-2 border">
+        <strong>Yes</strong>
+      </td>
+      <td class="px-4 py-2 border">
+        -
+      </td>
+    </tr>
+    
+    <tr id="model-Services-category">
+      <td class="px-4 py-2 border">
+       category 
+      </td>
+      <td class="px-4 py-2 border">
+       <a href="#type-outputType-Categories">Categories</a>
+      </td>
+      <td class="px-4 py-2 border">
+        <ul>
+          <li> - </li>
+        </ul>
+      </td>
+      <td class="px-4 py-2 border">
+        <strong>Yes</strong>
+      </td>
+      <td class="px-4 py-2 border">
+        -
+      </td>
+    </tr>
+    
+    <tr id="model-Services-sub_services">
+      <td class="px-4 py-2 border">
+       sub_services 
+      </td>
+      <td class="px-4 py-2 border">
+       <a href="#type-outputType-Sub_services">Sub_services[]</a>
+      </td>
+      <td class="px-4 py-2 border">
+        <ul>
+          <li> - </li>
         </ul>
       </td>
       <td class="px-4 py-2 border">
@@ -2513,26 +2513,6 @@
       </td>
     </tr>
     
-    <tr id="model-Categories-services">
-      <td class="px-4 py-2 border">
-       services 
-      </td>
-      <td class="px-4 py-2 border">
-       <a href="#type-outputType-Services">Services[]</a>
-      </td>
-      <td class="px-4 py-2 border">
-        <ul>
-          <li> - </li>
-        </ul>
-      </td>
-      <td class="px-4 py-2 border">
-        <strong>Yes</strong>
-      </td>
-      <td class="px-4 py-2 border">
-        -
-      </td>
-    </tr>
-    
     <tr id="model-Categories-category_name">
       <td class="px-4 py-2 border">
        category_name 
@@ -2583,6 +2563,26 @@
       <td class="px-4 py-2 border">
         <ul>
           <li><strong>@updatedAt</strong></li>
+        </ul>
+      </td>
+      <td class="px-4 py-2 border">
+        <strong>Yes</strong>
+      </td>
+      <td class="px-4 py-2 border">
+        -
+      </td>
+    </tr>
+    
+    <tr id="model-Categories-services">
+      <td class="px-4 py-2 border">
+       services 
+      </td>
+      <td class="px-4 py-2 border">
+       <a href="#type-outputType-Services">Services[]</a>
+      </td>
+      <td class="px-4 py-2 border">
+        <ul>
+          <li> - </li>
         </ul>
       </td>
       <td class="px-4 py-2 border">
@@ -3262,26 +3262,6 @@
       </td>
     </tr>
     
-    <tr id="model-Sub_services-services">
-      <td class="px-4 py-2 border">
-       services 
-      </td>
-      <td class="px-4 py-2 border">
-       <a href="#type-outputType-Services">Services</a>
-      </td>
-      <td class="px-4 py-2 border">
-        <ul>
-          <li> - </li>
-        </ul>
-      </td>
-      <td class="px-4 py-2 border">
-        <strong>Yes</strong>
-      </td>
-      <td class="px-4 py-2 border">
-        -
-      </td>
-    </tr>
-    
     <tr id="model-Sub_services-sub_service_name">
       <td class="px-4 py-2 border">
        sub_service_name 
@@ -3328,6 +3308,26 @@
       </td>
       <td class="px-4 py-2 border">
        String
+      </td>
+      <td class="px-4 py-2 border">
+        <ul>
+          <li> - </li>
+        </ul>
+      </td>
+      <td class="px-4 py-2 border">
+        <strong>Yes</strong>
+      </td>
+      <td class="px-4 py-2 border">
+        -
+      </td>
+    </tr>
+    
+    <tr id="model-Sub_services-services">
+      <td class="px-4 py-2 border">
+       services 
+      </td>
+      <td class="px-4 py-2 border">
+       <a href="#type-outputType-Services">Services</a>
       </td>
       <td class="px-4 py-2 border">
         <ul>
