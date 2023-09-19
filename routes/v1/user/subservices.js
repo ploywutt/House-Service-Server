@@ -3,12 +3,13 @@ import { prisma } from "../../../lib/db.js";
 
 const router = new Router();
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  const reqId = Number(req.params.id);
   try {
     const data = await prisma.sub_services.findMany({
       where: {
         services: {
-          service_name: "ซ่อมเครื่องซักผ้า",
+          id: reqId,
         },
       },
       select: {
