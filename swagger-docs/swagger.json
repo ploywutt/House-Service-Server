@@ -221,6 +221,26 @@
       }
     },
     "/v1/admin/services/{id}": {
+      "get": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Get service by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Admin/Service"
