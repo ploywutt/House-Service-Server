@@ -54,6 +54,35 @@ router.get("/", async (req, res) => {
 	}
 });
 
+router.get("/:id", async (req, res) => {
+	// #swagger.tags = ["Admin/Service"]
+	// #swagger.summary = "Get service by id"
+	const serviceId = Number(req.params.id);
+	try {
+		const service = await prisma.services.findUnique({
+			where: {
+				id: serviceId,
+			},
+			include: {
+				category: {
+					select: {
+						category_name: true,
+					},
+				},
+			},
+		});
+		const serviceById = {
+			...service,
+			category: service.category.category_name,
+		};
+		res.json({
+			data: serviceById,
+		});
+	} catch (error) {
+		console.error(error);
+	}
+});
+
 router.delete("/:id", async (req, res) => {
 	// #swagger.tags = ["Admin/Service"]
 	// #swagger.summary = "Delete service by id"
