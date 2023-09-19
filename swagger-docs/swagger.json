@@ -388,7 +388,6 @@
       }
     },
     "/v1/user/province/amphure/{id}": {
-    "/v1/user/orders/": {
       "get": {
         "description": "",
         "parameters": [
@@ -396,6 +395,39 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/province/tambon/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/orders/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
             "name": "email",
             "in": "query",
             "type": "string"
@@ -408,15 +440,11 @@
         }
       }
     },
-    "/v1/user/province/tambon/{id}": {
     "/v1/user/history/": {
       "get": {
         "description": "",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "required": true,
             "name": "email",
             "in": "query",
             "type": "string"
