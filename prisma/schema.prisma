@@ -123,3 +123,38 @@ model Employee {
   updated_at     DateTime         @updatedAt
   order_employee Order_Employee[]
 }
+
+model thai_amphures {
+  id             Int            @id
+  name_th        String?
+  name_en        String?
+  province_id    Int
+  created_at     String?
+  updated_at     String?
+  deleted_at     String?
+  thai_provinces thai_provinces @relation(fields: [province_id], references: [id])
+  thai_tambons   thai_tambons[]
+}
+
+model thai_provinces {
+  id            Int             @id
+  name_th       String
+  name_en       String?
+  geography_id  Int?
+  created_at    String?
+  updated_at    String?
+  deleted_at    String?
+  thai_amphures thai_amphures[]
+}
+
+model thai_tambons {
+  id            Int           @id
+  zip_code      Int?
+  name_th       String?
+  name_en       String?
+  amphure_id    Int
+  created_at    String?
+  updated_at    String?
+  deleted_at    String?
+  thai_amphures thai_amphures @relation(fields: [amphure_id], references: [id])
+}
