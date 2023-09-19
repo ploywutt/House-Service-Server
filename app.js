@@ -12,9 +12,11 @@ import v1UserProductRouter from "./routes/v1/user/products.js";
 import registerRouter from "./routes/v1/user/register.js";
 import subserviceRouter from "./routes/v1/user/subservices.js";
 import provinceRouter from "./routes/v1/user/province.js";
+import ordersRouter from "./routes/v1/user/orders.js";
+import historyRouter from "./routes/v1/user/history.js";
 
 const app = express();
-const port = 4004;
+const port = 4000;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -28,6 +30,8 @@ app.use("/v1/user/products", v1UserProductRouter);
 app.use("/register", registerRouter);
 app.use("/v1/user/subservices", subserviceRouter);
 app.use("/v1/user/province", provinceRouter);
+app.use("/v1/user/orders", ordersRouter);
+app.use("/v1/user/history", historyRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
