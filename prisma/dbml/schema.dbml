@@ -110,6 +110,41 @@ Table Employee {
   order_employee Order_Employee [not null]
 }
 
+Table thai_amphures {
+  id Int [pk]
+  name_th String
+  name_en String
+  province_id Int [not null]
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_provinces thai_provinces [not null]
+  thai_tambons thai_tambons [not null]
+}
+
+Table thai_provinces {
+  id Int [pk]
+  name_th String [not null]
+  name_en String
+  geography_id Int
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_amphures thai_amphures [not null]
+}
+
+Table thai_tambons {
+  id Int [pk]
+  zip_code Int
+  name_th String
+  name_en String
+  amphure_id Int [not null]
+  created_at String
+  updated_at String
+  deleted_at String
+  thai_amphures thai_amphures [not null]
+}
+
 Ref: Services.category_id > Categories.id [delete: Cascade]
 
 Ref: Sub_services.service_id > Services.id
@@ -129,3 +164,7 @@ Ref: Service_Order.sub_service_id > Sub_services.id
 Ref: Order_Employee.employee_id > Employee.employee_id
 
 Ref: Order_Employee.order_detail_id > Order_details.order_detail_id
+
+Ref: thai_amphures.province_id > thai_provinces.id
+
+Ref: thai_tambons.amphure_id > thai_amphures.id
