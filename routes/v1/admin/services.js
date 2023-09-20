@@ -155,7 +155,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
 	// #swagger.tags = ["Admin/Service"]
 	// #swagger.summary = "Create services"
-	const { service_name, category_name, pic_service } = req.body;
+	const { service_name, category_name, pic_service, items } = req.body;
 	try {
 		// 1. ค้นหาหมวดหมู่ด้วยชื่อ
     const category = await prisma.categories.findFirst({
@@ -169,21 +169,29 @@ router.post("/", async (req, res) => {
         message: `Category '${category_name}' not found.`
       });
     }
-		const result = await prisma.services.findMany({
+
+		const serviceResult = await prisma.services.findMany({
 			where: {
 				service_name: service_name
 			}
 		});
-		if (result.length > 0) {
+		if (serviceResult.length > 0) {
 			res.status(400).json({
-				result: result,
+				serviceResult: serviceResult,
 				message: `${service_name} has been in database.`,
 			});
 		} else {
+
+			const maxId = await prisma.services.aggregate({
+				_max: {
+					id: true
+				}
+			});
 			
+			console.log("Last service ID : ", maxId._max.id);			
 			await prisma.services.create({
 				data: {
-					id: 15, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
+					id: maxId._max.id + 1, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
 					service_name: service_name,
 					category_id: category.id,
 					pic_service: pic_service,
@@ -192,6 +200,39 @@ router.post("/", async (req, res) => {
 
 				}
 			});
+
+			const serviceId = await prisma.services.findFirst({
+				where: {
+					service_name: service_name,
+				},
+			});
+			if (!serviceId) {
+				res.json({
+					message: `Cannot find ${service_name}`,
+				});
+			}
+
+			console.log("service ID: ", serviceId)
+			console.log("Items", items);
+
+			const maxSubServiceId = await prisma.sub_services.aggregate({
+				_max: {
+					id: true
+				}
+			});
+	
+			const transformedData = items.map((item, index) => ({
+				id: maxSubServiceId._max.id + 1 + index, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
+				service_id: serviceId.id,
+				sub_service_name: item.itemName,
+				price_per_unit: parseFloat(item.itemPrice),
+				unit: item.itemUnit,
+			}));
+			console.log("หลังเพิ่มข้อมูล", transformedData);
+			await prisma.sub_services.createMany({
+				data: transformedData
+			})
+
 			res.json({
 				service_name,
 				message: "create services success",
@@ -202,45 +243,49 @@ router.post("/", async (req, res) => {
 	}
 });
 
-router.post("/subservices/", async (req, res) => {
-	// #swagger.tags = ["Admin/Service"]
-	// #swagger.summary = "Create sub service"
-	const { service_name, items } = req.body;
-	// const service_name = req.query.service
-	try {
-		const serviceId = await prisma.services.findFirst({
-			where: {
-				service_name: service_name,
-			},
-		});
-		if (!serviceId) {
-			res.json({
-				message: `Cannot find ${service_name}`,
-			});
-		}
-    console.log("service ID: ", serviceId)
-		console.log("ของ items", items);
-    const subServiceId = await prisma.sub_services.count();
+// router.post("/subservices/", async (req, res) => {
+// 	// #swagger.tags = ["Admin/Service"]
+// 	// #swagger.summary = "Create sub service"
+// 	const { service_name, items } = req.body;
+// 	// const service_name = req.query.service
+// 	try {
+// 		const serviceId = await prisma.services.findFirst({
+// 			where: {
+// 				service_name: service_name,
+// 			},
+// 		});
+// 		if (!serviceId) {
+// 			res.json({
+// 				message: `Cannot find ${service_name}`,
+// 			});
+// 		}
+//     console.log("service ID: ", serviceId)
+// 		console.log("ของ items", items);
+//     const maxSubServiceId = await prisma.sub_services.aggregate({
+// 			_max: {
+// 				id: true
+// 			}
+// 		});
 
-		const transformedData = items.map((item, index) => ({
-      id: subServiceId + 1 + index, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
-			service_id: serviceId.id,
-			sub_service_name: item.itemName,
-			price_per_unit: parseFloat(item.itemPrice),
-			unit: item.itemUnit,
-		}));
-		console.log("หลัง เพิ่มข้อมูล", transformedData);
-    await prisma.sub_services.createMany({
-      data: transformedData
-    })
-		res.json({
-			message: "Successfull",
-		});
-	} catch (error) {
-		res.json({
-			message: error,
-		});
-	}
-});
+// 		const transformedData = items.map((item, index) => ({
+//       id: maxSubServiceId._max.id + 1 + index, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
+// 			service_id: serviceId.id,
+// 			sub_service_name: item.itemName,
+// 			price_per_unit: parseFloat(item.itemPrice),
+// 			unit: item.itemUnit,
+// 		}));
+// 		console.log("หลังเพิ่มข้อมูล", transformedData);
+//     await prisma.sub_services.createMany({
+//       data: transformedData
+//     })
+// 		res.json({
+// 			message: "Successfull",
+// 		});
+// 	} catch (error) {
+// 		res.json({
+// 			message: error,
+// 		});
+// 	}
+// });
 
 export default router;
