@@ -54,6 +54,35 @@ router.get("/", async (req, res) => {
 	}
 });
 
+// router.get("/:id", async (req, res) => {
+// 	// #swagger.tags = ["Admin/Service"]
+// 	// #swagger.summary = "Get service by id"
+// 	const serviceId = Number(req.params.id);
+// 	try {
+// 		const service = await prisma.services.findUnique({
+// 			where: {
+// 				id: serviceId,
+// 			},
+// 			include: {
+// 				category: {
+// 					select: {
+// 						category_name: true,
+// 					},
+// 				},
+// 			},
+// 		});
+// 		const serviceById = {
+// 			...service,
+// 			category: service.category.category_name,
+// 		};
+// 		res.json({
+// 			data: serviceById,
+// 		});
+// 	} catch (error) {
+// 		console.error(error);
+// 	}
+// });
+
 router.get("/:id", async (req, res) => {
 	// #swagger.tags = ["Admin/Service"]
 	// #swagger.summary = "Get service by id"
@@ -71,15 +100,25 @@ router.get("/:id", async (req, res) => {
 				},
 			},
 		});
-		const serviceById = {
-			...service,
-			category: service.category.category_name,
-		};
+
+		const subservices = await prisma.sub_services.findMany({
+			where: {
+				service_id: serviceId,
+			},
+		});
+    const serviceDetail = {
+      ...service,
+      category: service.category.category_name,
+      subServices: subservices,
+    }
+
 		res.json({
-			data: serviceById,
+			data: serviceDetail,
 		});
 	} catch (error) {
-		console.error(error);
+		res.json({
+			message: error,
+		});
 	}
 });
 
@@ -124,15 +163,12 @@ router.post("/", async (req, res) => {
         category_name: category_name
       }
     });
-
 		// 2. ตรวจสอบว่าหมวดหมู่มีอยู่หรือไม่
     if (!category) {
       res.status(400).json({
         message: `Category '${category_name}' not found.`
       });
-      return;
     }
-
 		const result = await prisma.services.findMany({
 			where: {
 				service_name: service_name
@@ -144,8 +180,10 @@ router.post("/", async (req, res) => {
 				message: `${service_name} has been in database.`,
 			});
 		} else {
+			
 			await prisma.services.create({
 				data: {
+					id: 15, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
 					service_name: service_name,
 					category_id: category.id,
 					pic_service: pic_service,
@@ -161,6 +199,47 @@ router.post("/", async (req, res) => {
 		}
 	} catch (error) {
 		console.error(error);
+	}
+});
+
+router.post("/subservices/", async (req, res) => {
+	// #swagger.tags = ["Admin/Service"]
+	// #swagger.summary = "Create sub service"
+	const { service_name, items } = req.body;
+	// const service_name = req.query.service
+	try {
+		const serviceId = await prisma.services.findFirst({
+			where: {
+				service_name: service_name,
+			},
+		});
+		if (!serviceId) {
+			res.json({
+				message: `Cannot find ${service_name}`,
+			});
+		}
+    console.log("service ID: ", serviceId)
+		console.log("ของ items", items);
+    const subServiceId = await prisma.sub_services.count();
+
+		const transformedData = items.map((item, index) => ({
+      id: subServiceId + 1 + index, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
+			service_id: serviceId.id,
+			sub_service_name: item.itemName,
+			price_per_unit: parseFloat(item.itemPrice),
+			unit: item.itemUnit,
+		}));
+		console.log("หลัง เพิ่มข้อมูล", transformedData);
+    await prisma.sub_services.createMany({
+      data: transformedData
+    })
+		res.json({
+			message: "Successfull",
+		});
+	} catch (error) {
+		res.json({
+			message: error,
+		});
 	}
 });
 
