@@ -16,6 +16,7 @@ import ordersRouter from "./routes/v1/user/orders.js";
 import historyRouter from "./routes/v1/user/history.js";
 import userServicesRouter from "./routes/v1/user/services.js";
 import userCategoriesRouter from "./routes/v1/user/categories.js";
+import userProfileRouter from "./routes/v1/user/profile.js";
 
 
 const app = express();
@@ -37,6 +38,7 @@ app.use("/v1/user/orders", ordersRouter);
 app.use("/v1/user/history", historyRouter);
 app.use("/v1/user/services", userServicesRouter);
 app.use("/v1/user/categories", userCategoriesRouter);
+app.use("/v1/user/profile", userProfileRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
