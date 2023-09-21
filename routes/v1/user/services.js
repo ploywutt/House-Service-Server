@@ -3,6 +3,28 @@ import { prisma } from "../../../lib/db.js";
 
 const router = new Router();
 
+router.get("/autocomplete", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+    const result = await prisma.services.findMany({
+      where: {
+        service_name: {
+          contains: search,
+        },
+      },
+      take: 10,
+      orderBy: {
+        service_name: "asc",
+      },
+    });
+    res.send({
+      data: result,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 router.get("/", async (req, res) => {
   // #swagger.tags = ["User/Service"]
   // #swagger.summary = "Get all services"
@@ -11,6 +33,15 @@ router.get("/", async (req, res) => {
   const sort = req.query.sort;
   const price = +req.query.price;
   const page = +req.query.page || 1;
+  const minprice = +req.query.minprice || 0;
+  const maxprice = +req.query.maxprice || 1000000;
+  let orderBy = {
+    service_name: "asc",
+  };
+  if (sort == "desc") orderBy = { service_name: "desc" };
+  // if (sort == "recommended")
+  if (sort == "new") orderBy = { createAt: "desc" };
+  if (sort == "old") orderBy = { createAt: "asc" };
 
   const PAGE_SIZE = +req.query.pageSize || 24;
   const skip = PAGE_SIZE * (page - 1);
@@ -29,6 +60,14 @@ router.get("/", async (req, res) => {
             contains: category,
           },
         },
+        sub_services: {
+          some: {
+            price_per_unit: {
+              gte: minprice,
+              lte: maxprice,
+            },
+          },
+        },
       },
       include: {
         category: {
@@ -40,9 +79,7 @@ router.get("/", async (req, res) => {
           select: { price_per_unit: true },
         },
       },
-      orderBy: {
-        service_name: sort,
-      },
+      orderBy,
     });
 
     const listServices = allServices.map((service) => {
