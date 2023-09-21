@@ -16,6 +16,11 @@ router.get("/:id", async (req, res) => {
         sub_service_name: true,
         price_per_unit: true,
         unit: true,
+        services: {
+          select: {
+            service_name: true,
+          },
+        },
       },
     });
     res.json({
