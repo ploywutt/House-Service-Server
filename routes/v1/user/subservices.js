@@ -4,6 +4,8 @@ import { prisma } from "../../../lib/db.js";
 const router = new Router();
 
 router.get("/:id", async (req, res) => {
+	// #swagger.tags = ["User/Service"]
+  // #swagger.summary = "Get sub-service by id"
 	const reqId = Number(req.params.id);
 	try {
 		const data = await prisma.sub_services.findMany({
