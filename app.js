@@ -18,7 +18,6 @@ import userServicesRouter from "./routes/v1/user/services.js";
 import userCategoriesRouter from "./routes/v1/user/categories.js";
 import userProfileRouter from "./routes/v1/user/profile.js";
 
-
 const app = express();
 const port = 4000;
 

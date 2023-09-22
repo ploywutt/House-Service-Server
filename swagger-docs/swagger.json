@@ -512,7 +512,6 @@
           }
         }
       }
-
     },
     "/v1/user/services/autocomplete": {
       "get": {
