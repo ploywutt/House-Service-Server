@@ -17,12 +17,13 @@ datasource db {
 }
 
 model Customer_profile {
-  id       Int    @id @default(autoincrement())
-  name     String
-  phone    String @unique
-  email    String @unique
-  password String
-  order Orders[]
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String   @unique
+  email      String   @unique
+  password   String
+  avatar_url String?
+  order      Orders[]
 }
 
 model Services {
@@ -45,32 +46,32 @@ model Categories {
 }
 
 model Sub_services {
-  id               Int      @id @default(autoincrement())
+  id               Int             @id @default(autoincrement())
   service_id       Int
   sub_service_name String
   price_per_unit   Int
   unit             String
-  services         Services @relation(fields: [service_id], references: [id])
-  service_order Service_Order[]
+  service_order    Service_Order[]
+  services         Services        @relation(fields: [service_id], references: [id])
 }
 
 model Orders {
-  order_id        String          @id
+  order_id        String           @id
   user_id         Int
-  status_id       Int             @default(1)
-  order_detail_id Int             @unique
-  promotion_code  String?         @unique
-  created_at      DateTime        @default(now())
-  updated_at      DateTime        @updatedAt
-  order_detail    Order_details   @relation(fields: [order_detail_id], references: [order_detail_id])
-  promotion       Promotions?     @relation(fields: [promotion_code], references: [promotion_code])
-  status          Status          @relation(fields: [status_id], references: [status_id])
-  user            Customer_profile           @relation(fields: [user_id], references: [id])
+  status_id       Int              @default(1)
+  order_detail_id Int              @unique
+  promotion_code  String?          @unique
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+  order_detail    Order_details    @relation(fields: [order_detail_id], references: [order_detail_id])
+  promotion       Promotions?      @relation(fields: [promotion_code], references: [promotion_code])
+  status          Status           @relation(fields: [status_id], references: [status_id])
+  user            Customer_profile @relation(fields: [user_id], references: [id])
   service_order   Service_Order[]
 }
 
 model Status {
-  status_id Int     @id @default(autoincrement())
+  status_id Int      @id @default(autoincrement())
   status    String
   order     Orders[]
 }
