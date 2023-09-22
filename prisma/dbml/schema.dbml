@@ -36,8 +36,13 @@ Table Sub_services {
   sub_service_name String [not null]
   price_per_unit Int [not null]
   unit String [not null]
+<<<<<<< HEAD
+  services Services [not null]
+  service_order Service_Order [not null]
+=======
   service_order Service_Order [not null]
   services Services [not null]
+>>>>>>> 69c2d3dc12ee4f7525fdae30f310603ab3e1fb8b
 }
 
 Table Orders {
@@ -74,6 +79,15 @@ Table Promotions {
 }
 
 Table Order_details {
+<<<<<<< HEAD
+  order_detail_id Int [pk, increment]
+  working_time DateTime [not null]
+  address String [not null]
+  subdistrict String [not null]
+  district String [not null]
+  province String [not null]
+  details String
+=======
   address String [not null]
   details String
   district String [not null]
@@ -81,6 +95,7 @@ Table Order_details {
   province String [not null]
   subdistrict String [not null]
   working_time DateTime [not null]
+>>>>>>> 69c2d3dc12ee4f7525fdae30f310603ab3e1fb8b
   order_employee Order_Employee [not null]
   order Orders
 }

@@ -27,7 +27,7 @@ router.get("/amphure/:id", async (req, res) => {
 
   const district = await prisma.thai_amphures.findMany({
     where: {
-      thai_provinces: {
+      provinces: {
         name_th: provincesId,
       },
     },
@@ -47,7 +47,7 @@ router.get("/tambon/:id", async (req, res) => {
 
   const subDistrict = await prisma.thai_tambons.findMany({
     where: {
-      thai_amphures: {
+      amphure: {
         name_th: districtId,
       },
     },

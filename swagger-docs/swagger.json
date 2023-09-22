@@ -205,6 +205,9 @@
                 },
                 "pic_service": {
                   "example": "any"
+                },
+                "items": {
+                  "example": "any"
                 }
               }
             }
@@ -216,6 +219,47 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Update services",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "service_name": {
+                  "example": "any"
+                },
+                "category_name": {
+                  "example": "any"
+                },
+                "pic_service": {
+                  "example": "any"
+                },
+                "createAt": {
+                  "example": "any"
+                },
+                "items": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -366,6 +410,10 @@
     },
     "/v1/user/subservices/{id}": {
       "get": {
+        "tags": [
+          "User/Service"
+        ],
+        "summary": "Get sub-service by id",
         "description": "",
         "parameters": [
           {
@@ -464,6 +512,7 @@
           }
         }
       }
+
     },
     "/v1/user/services/autocomplete": {
       "get": {
