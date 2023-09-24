@@ -33,16 +33,29 @@ router.get("/", async (req, res) => {
 				category: {
 					select: {
 						category_name: true,
+						recommend: true,
 					},
 				},
 			},
-			orderBy: {
-				service_name: sort,
-			},
+			orderBy: [
+				{
+					category: {
+						recommend: "asc",
+					},
+				},
+				{
+					updateAt: "asc",
+				},
+				{
+					service_name: 'asc',
+				},
+			],
 		});
+		// console.log(allServices);
 		const listServices = allServices.map((service) => ({
 			...service,
 			category: service.category.category_name,
+			recommend: service.category.recommend,
 		}));
 
 		res.json({
@@ -106,7 +119,7 @@ router.delete("/:id", async (req, res) => {
 		if (!existServiceId) {
 			res.status(400).json({
 				serviceId: null,
-				message: `Not found serviceId: ${serviceId}`,
+				message: `Not found serviceId: ${serviceId}`, 
 			});
 		} else {
 			const subServicesToDelete = await prisma.sub_services.findMany({
@@ -114,16 +127,15 @@ router.delete("/:id", async (req, res) => {
 					service_id: Number(existServiceId.id), // ใช้ ID ของบริการ (service) ที่คุณต้องการลบ
 				},
 			});
-			
-			if(subServicesToDelete) {
-				for (const subService of subServicesToDelete) {
+			// console.log(subServicesToDelete)
+			if (subServicesToDelete) {
+				for (let subService of subServicesToDelete) {
 					await prisma.sub_services.delete({
 						where: {
 							id: subService.id,
 						},
 					});
 				}
-				
 			}
 			await prisma.services.delete({
 				where: {
@@ -135,7 +147,9 @@ router.delete("/:id", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		res.json({
+			message: error
+		})
 	}
 });
 
@@ -174,7 +188,7 @@ router.post("/", async (req, res) => {
 				},
 			});
 
-			console.log("Last service ID : ", maxId._max.id);
+			// console.log("Last service ID : ", maxId._max.id);
 			await prisma.services.create({
 				data: {
 					id: maxId._max.id + 1, // ยังมีปัญหาตรงนี้ ต้องแก้มือก่อน
@@ -201,8 +215,8 @@ router.post("/", async (req, res) => {
 				});
 			}
 
-			console.log("service ID: ", serviceId);
-			console.log("Items", items);
+			// console.log("service ID: ", serviceId);
+			// console.log("Items", items);
 
 			const maxSubServiceId = await prisma.sub_services.aggregate({
 				_max: {
@@ -217,7 +231,7 @@ router.post("/", async (req, res) => {
 				price_per_unit: parseFloat(item.itemPrice),
 				unit: item.itemUnit,
 			}));
-			console.log("หลังเพิ่มข้อมูล", transformedData);
+			// console.log("หลังเพิ่มข้อมูล", transformedData);
 			await prisma.sub_services.createMany({
 				data: transformedData,
 			});
@@ -228,7 +242,9 @@ router.post("/", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+		res.json({
+			message: error
+		})
 	}
 });
 
@@ -265,12 +281,14 @@ router.put("/", async (req, res) => {
 				id: true,
 			},
 		});
-		
-		const existingData = await prisma.sub_services.findMany({ where: { service_id: Number(id) } });
+
+		const existingData = await prisma.sub_services.findMany({
+			where: { service_id: Number(id) },
+		});
 		for (const item of existingData) {
 			// ตรวจสอบว่ามีข้อมูลใหม่สำหรับอัพเดตหรือไม่
-			const newData = items.find(newItem => newItem.id === item.id);
-		
+			const newData = items.find((newItem) => newItem.id === item.id);
+
 			if (newData) {
 				// มีข้อมูลใหม่สำหรับอัพเดต
 				await prisma.sub_services.update({
@@ -283,10 +301,12 @@ router.put("/", async (req, res) => {
 				});
 			}
 		}
-		
+
 		// วนลูปเพื่อเพิ่มข้อมูลใหม่
 		for (const newDataItem of items) {
-			if (!existingData.some(existingItem => existingItem.id === newDataItem.id)) {
+			if (
+				!existingData.some((existingItem) => existingItem.id === newDataItem.id)
+			) {
 				// ไม่พบข้อมูลเดิมในฐานข้อมูล จึงเป็นข้อมูลใหม่
 				await prisma.sub_services.create({
 					data: {
@@ -305,7 +325,9 @@ router.put("/", async (req, res) => {
 			message: "update services success",
 		});
 	} catch (error) {
-		console.error(error);
+		res.json({
+			message: error
+		})
 	}
 });
 

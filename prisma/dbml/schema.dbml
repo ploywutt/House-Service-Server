@@ -28,6 +28,7 @@ Table Categories {
   category_name String [not null]
   createAt DateTime [default: `now()`, not null]
   updateAt DateTime [not null]
+  recommend Int
   services Services [not null]
 }
 
