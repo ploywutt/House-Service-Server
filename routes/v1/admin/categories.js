@@ -13,6 +13,9 @@ router.get("/", async (req, res) => {
 					contains: search, // ใช้ contains เพื่อให้คำค้นมีค่าเหมือน RegExp
 				},
 			},
+			orderBy: {
+				recommend: 'asc'
+			}
 		});
 
 		res.json({
@@ -60,11 +63,23 @@ router.post("/", async (req, res) => {
 					message: `${category_name} has been in database.`,
 				});
 			} else {
+				const maxRecomend = await prisma.categories.aggregate({
+					_max: {
+						recommend: true,
+					},
+				});
+				const maxId = await prisma.categories.aggregate({
+					_max: {
+						id: true,
+					}
+				})
 				await prisma.categories.create({
 					data: {
+						id: maxId._max.id + 1,
 						category_name: category_name,
 						createAt: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
 						updateAt: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
+						recommend: maxRecomend._max.recommend + 1,
 					},
 				});
 				res.json({
@@ -79,7 +94,10 @@ router.post("/", async (req, res) => {
 			});
 		}
 	} catch (error) {
-		console.error(error);
+    res.status(500).json({
+      message: error
+    })
+		console.error(error)
 	}
 });
 
@@ -109,7 +127,10 @@ router.delete("/:id", async (req, res) => {
       });
 		}
 	} catch (error) {
-		console.error(error);
+    res.status(400).json({
+      message: error
+    })
+		console.error(error)
 	}
 });
 
@@ -146,8 +167,35 @@ router.put("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error)
-  }
+    res.status(400).json({
+      message: error
+    })
+		console.error(error)
+	}
 });
+
+router.put("/", async (req, res) => {
+	// #swagger.tags = ["Admin/Category"]
+	// #swagger.summary = "Update categorie by drag & drop"
+	const { newPosition } = req.body
+	try {
+		for (const {id, position} of newPosition) {
+			await prisma.categories.update({
+				where: {id},
+				data: {recommend: position},
+			})
+		}
+    
+		res.json({
+			message: `Drag and drop update success`
+		})
+	} catch (error) {
+    res.status(400).json({
+      message: error
+    })
+		console.error(error)
+	}
+})
+
 
 export default router;
