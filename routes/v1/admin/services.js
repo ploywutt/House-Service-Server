@@ -89,6 +89,9 @@ router.get("/:id", async (req, res) => {
 			where: {
 				service_id: serviceId,
 			},
+			orderBy: {
+				price_per_unit: "asc"
+			}
 		});
 		const serviceDetail = {
 			...service,
@@ -276,15 +279,14 @@ router.put("/", async (req, res) => {
 			},
 		});
 
-		const maxSubServiceId = await prisma.sub_services.aggregate({
-			_max: {
-				id: true,
-			},
-		});
-
+		
 		const existingData = await prisma.sub_services.findMany({
 			where: { service_id: Number(id) },
 		});
+
+		console.log(`existingData:`, existingData)
+		console.log(`items:`, items)
+
 		for (const item of existingData) {
 			// ตรวจสอบว่ามีข้อมูลใหม่สำหรับอัพเดตหรือไม่
 			const newData = items.find((newItem) => newItem.id === item.id);
@@ -299,8 +301,21 @@ router.put("/", async (req, res) => {
 						unit: newData.unit,
 					},
 				});
+			} else {
+				await prisma.sub_services.delete({
+					where: {
+						id: item.id
+					}
+				})
 			}
+			
 		}
+
+		const maxSubServiceId = await prisma.sub_services.aggregate({
+			_max: {
+				id: true,
+			},
+		});
 
 		// วนลูปเพื่อเพิ่มข้อมูลใหม่
 		for (const newDataItem of items) {
