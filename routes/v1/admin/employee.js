@@ -15,6 +15,13 @@ router.get("/", async (req, res) => {
       // },
       select: {
         order_id: true,
+        user: {
+          select: {
+            name: true,
+            phone: true,
+            email: true,
+          },
+        },
         status: {
           select: {
             status: true,
@@ -23,6 +30,11 @@ router.get("/", async (req, res) => {
         order_detail: {
           select: {
             working_time: true,
+            address: true,
+            subdistrict: true,
+            district: true,
+            province: true,
+            details: true,
           },
         },
       },
