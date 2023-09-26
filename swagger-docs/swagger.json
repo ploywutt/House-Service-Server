@@ -360,6 +360,47 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Create Promotion Code",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "promotion_code": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "quota": {
+                  "example": "any"
+                },
+                "discount_amount": {
+                  "example": "any"
+                },
+                "expired_time": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
     "/v1/admin/promotions/{id}": {
@@ -420,6 +461,42 @@
           },
           "409": {
             "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/v1/user/products/": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get all products",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/{id}": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get products by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
