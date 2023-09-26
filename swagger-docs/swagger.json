@@ -465,6 +465,27 @@
         }
       }
     },
+    "/v1/employee/": {
+      "get": {
+        "tags": [
+          "Admin/Category"
+        ],
+        "summary": "Get all categories",
+        "description": "",
+        "parameters": [
+          {
+            "name": "orders",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/user/products/": {
       "get": {
         "tags": [
