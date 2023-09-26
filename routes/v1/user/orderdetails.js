@@ -16,8 +16,6 @@ router.post("/", async (req, res) => {
     status_id,
     promotion_code,
     sub_service_orders,
-    // sub_service_name,
-    // amount,
   } = req.body;
 
   //สร้าง order_id
@@ -65,34 +63,36 @@ router.post("/", async (req, res) => {
     });
 
     const serviceOrders = await Promise.all(
-      sub_service_orders.map(async (subServiceOrder) => {
-        const { sub_service_name, amount } = subServiceOrder;
+      sub_service_orders.map(async (subServiceOrder, index) => {
+        const { sub_service_name, count } = subServiceOrder;
 
         //สร้าง service_order_id
-        const latestServiceOrder = await prisma.Service_Order.findFirst({
-          orderBy: { service_order_id: "desc" },
-        });
-        const newServiceOrderId = latestServiceOrder.service_order_id + 1;
+        if (count > 0) {
+          const latestServiceOrder = await prisma.Service_Order.findFirst({
+            orderBy: { service_order_id: "desc" },
+          });
+          const newServiceOrderId = latestServiceOrder.service_order_id + 1;
 
-        //หา id ของ subservice
-        const getSubServiceId = await prisma.Sub_services.findMany({
-          where: {
-            sub_service_name,
-          },
-          select: {
-            id: true,
-          },
-        });
-        const subServiceId = getSubServiceId[0].id;
+          //หา id ของ subservice
+          const getSubServiceId = await prisma.Sub_services.findMany({
+            where: {
+              sub_service_name,
+            },
+            select: {
+              id: true,
+            },
+          });
+          const subServiceId = getSubServiceId[index].id;
 
-        return prisma.Service_Order.create({
-          data: {
-            order_id: newOrderId,
-            sub_service_id: subServiceId,
-            service_order_id: newServiceOrderId,
-            amount,
-          },
-        });
+          return prisma.Service_Order.create({
+            data: {
+              order_id: newOrderId,
+              sub_service_id: subServiceId,
+              service_order_id: newServiceOrderId,
+              amount: count,
+            },
+          });
+        }
       })
     );
 
