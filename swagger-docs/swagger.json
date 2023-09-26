@@ -744,11 +744,6 @@
             "type": "string"
           },
           {
-            "name": "price",
-            "in": "query",
-            "type": "string"
-          },
-          {
             "name": "page",
             "in": "query",
             "type": "string"
@@ -775,6 +770,23 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/user/services/maxprice": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
