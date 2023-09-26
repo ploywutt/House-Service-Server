@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../../../lib/db.js";
+import { Prisma } from "@prisma/client";
 
 const router = new Router();
 
@@ -31,85 +32,93 @@ router.get("/", async (req, res) => {
   const search = req.query.search;
   const category = req.query.category;
   const sort = req.query.sort;
-  const price = +req.query.price;
   const page = +req.query.page || 1;
   const minprice = +req.query.minprice || 0;
   const maxprice = +req.query.maxprice || 1000000;
-  let orderBy = {
-    service_name: "asc",
-  };
-  if (sort == "desc") orderBy = { service_name: "desc" };
-  // if (sort == "recommended")
-  if (sort == "new") orderBy = { createAt: "desc" };
-  if (sort == "old") orderBy = { createAt: "asc" };
 
   const PAGE_SIZE = +req.query.pageSize || 24;
   const skip = PAGE_SIZE * (page - 1);
+  const searchQuery = `%${search}%`;
 
   try {
-    const serviceCount = await prisma.services.count();
-    const allServices = await prisma.services.findMany({
-      take: PAGE_SIZE,
-      skip: skip,
-      where: {
-        service_name: {
-          contains: search, // ใช้ contains เพื่อให้คำค้นมีค่าเหมือน RegExp
-        },
-        category: {
-          category_name: {
-            contains: category,
-          },
-        },
-        sub_services: {
-          some: {
-            price_per_unit: {
-              gte: minprice,
-              lte: maxprice,
-            },
-          },
-        },
-      },
-      include: {
-        category: {
-          select: {
-            category_name: true,
-          },
-        },
-        sub_services: {
-          select: { price_per_unit: true },
-        },
-      },
-      orderBy,
-    });
+    let sorting =
+      sort === "desc"
+        ? Prisma.sql`service_name desc`
+        : sort === `asc`
+        ? Prisma.sql`service_name asc`
+        : sort === `recommend asc`
+        ? Prisma.sql`recommend asc`
+        : sort === `popular`
+        ? Prisma.sql`sum asc`
+        : sort === "asc";
+    let allServices = await prisma.$queryRaw`
+    SELECT "Services".id,
+        "Services".service_name,
+        category_name as category,
+        min as min_price,
+        max as max_price,
+        SUM,
+        recommend,
+        pic_service
+    FROM "Services"
+    LEFT JOIN "Categories" ON "Categories".id = "Services".category_id
+    LEFT JOIN
+      (SELECT service_id,min(price_per_unit),max(price_per_unit)
+      FROM "Sub_services"
+      GROUP BY service_id) minmax 
+    ON minmax.service_id = "Services".id
+    LEFT JOIN
+      (SELECT "Services".id,sum(amount)
+      FROM "Services"
+      LEFT JOIN "Sub_services" ON "Sub_services".service_id = "Services".id
+      LEFT JOIN "Service_Order" ON "Service_Order".sub_service_id = "Sub_services".id
+      GROUP BY "Services".id) SUM 
+    ON sum.id = "Services".id 
+    WHERE (min between ${minprice} and ${maxprice} or max between ${minprice} and ${maxprice})
+     ${category ? Prisma.sql` AND category_name=${category}` : Prisma.empty} 
+     ${
+       search
+         ? Prisma.sql` AND service_name Ilike ${searchQuery}`
+         : Prisma.empty
+     } 
+    ORDER By ${sorting}`;
 
-    const listServices = allServices.map((service) => {
-      const priceData = service.sub_services.map((sub) => sub.price_per_unit);
-      let max_price = null;
-      let min_price = null;
-      if (priceData.length > 0) {
-        min_price = Math.min.apply(null, priceData);
-        max_price = Math.max.apply(null, priceData);
-      }
-      return {
-        ...service,
-        min_price,
-        max_price,
-        category: service.category.category_name,
-      };
-    });
-
+    allServices = allServices.map((service) => ({
+      ...service,
+      sum: Number(service.sum),
+    }));
+    const allServicesPage = allServices.slice(
+      PAGE_SIZE * (page - 1),
+      PAGE_SIZE * page
+    );
+    const serviceCount = allServices.length;
     res.json({
-      data: listServices,
+      data: allServicesPage,
       pagination: {
         page,
         pageSize: PAGE_SIZE,
         totalRecord: serviceCount,
         totalPage: Math.ceil(serviceCount / PAGE_SIZE),
       },
-      // totalServices: serviceCount,
     });
   } catch (error) {
     res.status(400).send(error);
+  }
+});
+
+router.get("/maxprice", async (req, res) => {
+  try {
+    const search = req.query.search || "";
+    const result = await prisma.sub_services.aggregate({
+      _max: {
+        price_per_unit: true,
+      },
+    });
+    res.send({
+      data: result._max.price_per_unit,
+    });
+  } catch (error) {
+    console.error(error);
   }
 });
 

@@ -424,6 +424,42 @@
         }
       }
     },
+    "/v1/user/products/": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get all products",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/{id}": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get products by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/register/": {
       "post": {
         "tags": [
@@ -613,11 +649,6 @@
             "type": "string"
           },
           {
-            "name": "price",
-            "in": "query",
-            "type": "string"
-          },
-          {
             "name": "page",
             "in": "query",
             "type": "string"
@@ -644,6 +675,23 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/user/services/maxprice": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
