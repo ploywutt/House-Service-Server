@@ -17,12 +17,13 @@ datasource db {
 }
 
 model Customer_profile {
-  id       Int      @id @default(autoincrement())
-  name     String
-  phone    String   @unique
-  email    String   @unique
-  password String
-  order    Orders[]
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String   @unique
+  email      String   @unique
+  password   String
+  avatar_url String?
+  order      Orders[]
 }
 
 model Services {
@@ -41,6 +42,7 @@ model Categories {
   category_name String
   createAt      DateTime   @default(now())
   updateAt      DateTime   @updatedAt
+  recommend     Int?       
   services      Services[]
 }
 
@@ -88,13 +90,13 @@ model Promotions {
 }
 
 model Order_details {
-  address         String
-  details         String?
-  district        String
   order_detail_id Int              @id @default(autoincrement())
-  province        String
-  subdistrict     String
   working_time    DateTime
+  address         String
+  subdistrict     String
+  district        String
+  province        String
+  details         String?
   order_employee  Order_Employee[]
   order           Orders?
 }

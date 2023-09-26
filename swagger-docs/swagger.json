@@ -57,6 +57,38 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin/Category"
+        ],
+        "summary": "Update categorie by drag & drop",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newPosition": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -205,6 +237,9 @@
                 },
                 "pic_service": {
                   "example": "any"
+                },
+                "items": {
+                  "example": "any"
                 }
               }
             }
@@ -216,6 +251,47 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Admin/Service"
+        ],
+        "summary": "Update services",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "example": "any"
+                },
+                "service_name": {
+                  "example": "any"
+                },
+                "category_name": {
+                  "example": "any"
+                },
+                "pic_service": {
+                  "example": "any"
+                },
+                "createAt": {
+                  "example": "any"
+                },
+                "items": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -261,6 +337,110 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/admin/promotions/": {
+      "get": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Get all Promotion Code",
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Create Promotion Code",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "promotion_code": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "quota": {
+                  "example": "any"
+                },
+                "discount_amount": {
+                  "example": "any"
+                },
+                "expired_time": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/admin/promotions/{id}": {
+      "get": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Get Promotion code by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Delete Promotion Code by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -366,6 +546,10 @@
     },
     "/v1/user/subservices/{id}": {
       "get": {
+        "tags": [
+          "User/Service"
+        ],
+        "summary": "Get sub-service by id",
         "description": "",
         "parameters": [
           {
@@ -519,6 +703,23 @@
         }
       }
     },
+    "/v1/user/services/autocomplete": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/user/services/": {
       "get": {
         "tags": [
@@ -553,6 +754,16 @@
             "type": "string"
           },
           {
+            "name": "minprice",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "maxprice",
+            "in": "query",
+            "type": "string"
+          },
+          {
             "name": "pageSize",
             "in": "query",
             "type": "string"
@@ -564,6 +775,40 @@
           },
           "400": {
             "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/user/categories/": {
+      "get": {
+        "tags": [
+          "User/Categories"
+        ],
+        "summary": "Get all categories",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v1/user/profile/": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }

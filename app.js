@@ -6,6 +6,7 @@ import swaggerfile from "./swagger-docs/swagger.json" assert { type: "json" };
 
 import categoriesRouter from "./routes/v1/admin/categories.js";
 import servicesRouter from "./routes/v1/admin/services.js";
+import promotionsRouter from "./routes/v1/admin/promotions.js"
 import loginAdmin from "./routes/v1/admin/login.js";
 
 import v1UserProductRouter from "./routes/v1/user/products.js";
@@ -16,6 +17,9 @@ import ordersRouter from "./routes/v1/user/orders.js";
 import historyRouter from "./routes/v1/user/history.js";
 import userServicesRouter from "./routes/v1/user/services.js";
 import orderdetailsRouter from "./routes/v1/user/orderdetails.js";
+import userCategoriesRouter from "./routes/v1/user/categories.js";
+import userProfileRouter from "./routes/v1/user/profile.js";
+
 
 const app = express();
 const port = 4000;
@@ -26,6 +30,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerfile));
 
 app.use("/v1/admin/categories", categoriesRouter);
 app.use("/v1/admin/services", servicesRouter);
+app.use("/v1/admin/promotions", promotionsRouter)
 app.use("/v1/admin/login", loginAdmin);
 
 app.use("/v1/user/products", v1UserProductRouter);
@@ -36,6 +41,8 @@ app.use("/v1/user/orders", ordersRouter);
 app.use("/v1/user/orderdetails", orderdetailsRouter);
 app.use("/v1/user/history", historyRouter);
 app.use("/v1/user/services", userServicesRouter);
+app.use("/v1/user/categories", userCategoriesRouter);
+app.use("/v1/user/profile", userProfileRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

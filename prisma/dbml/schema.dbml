@@ -8,6 +8,7 @@ Table Customer_profile {
   phone String [unique, not null]
   email String [unique, not null]
   password String [not null]
+  avatar_url String
   order Orders [not null]
 }
 
@@ -27,6 +28,7 @@ Table Categories {
   category_name String [not null]
   createAt DateTime [default: `now()`, not null]
   updateAt DateTime [not null]
+  recommend Int
   services Services [not null]
 }
 
@@ -74,13 +76,13 @@ Table Promotions {
 }
 
 Table Order_details {
-  address String [not null]
-  details String
-  district String [not null]
   order_detail_id Int [pk, increment]
-  province String [not null]
-  subdistrict String [not null]
   working_time DateTime [not null]
+  address String [not null]
+  subdistrict String [not null]
+  district String [not null]
+  province String [not null]
+  details String
   order_employee Order_Employee [not null]
   order Orders
 }
