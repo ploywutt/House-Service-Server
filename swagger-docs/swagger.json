@@ -424,6 +424,63 @@
         }
       }
     },
+    "/v1/employee/": {
+      "get": {
+        "tags": [
+          "Admin/Category"
+        ],
+        "summary": "Get all categories",
+        "description": "",
+        "parameters": [
+          {
+            "name": "orders",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get all products",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/products/{id}": {
+      "get": {
+        "tags": [
+          "User/Products"
+        ],
+        "summary": "Get products by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/register/": {
       "post": {
         "tags": [

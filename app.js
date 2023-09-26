@@ -6,7 +6,7 @@ import swaggerfile from "./swagger-docs/swagger.json" assert { type: "json" };
 
 import categoriesRouter from "./routes/v1/admin/categories.js";
 import servicesRouter from "./routes/v1/admin/services.js";
-import promotionsRouter from "./routes/v1/admin/promotions.js"
+import promotionsRouter from "./routes/v1/admin/promotions.js";
 import loginAdmin from "./routes/v1/admin/login.js";
 
 import v1UserProductRouter from "./routes/v1/user/products.js";
@@ -18,6 +18,7 @@ import historyRouter from "./routes/v1/user/history.js";
 import userServicesRouter from "./routes/v1/user/services.js";
 import userCategoriesRouter from "./routes/v1/user/categories.js";
 import userProfileRouter from "./routes/v1/user/profile.js";
+import employeeRouter from "./routes/v1/admin/employee.js";
 
 const app = express();
 const port = 4000;
@@ -28,8 +29,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerfile));
 
 app.use("/v1/admin/categories", categoriesRouter);
 app.use("/v1/admin/services", servicesRouter);
-app.use("/v1/admin/promotions", promotionsRouter)
+app.use("/v1/admin/promotions", promotionsRouter);
 app.use("/v1/admin/login", loginAdmin);
+
+app.use("/v1/employee", employeeRouter);
 
 app.use("/v1/user/products", v1UserProductRouter);
 app.use("/register", registerRouter);
