@@ -360,6 +360,47 @@
             "description": "OK"
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Create Promotion Code",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "promotion_code": {
+                  "example": "any"
+                },
+                "type": {
+                  "example": "any"
+                },
+                "quota": {
+                  "example": "any"
+                },
+                "discount_amount": {
+                  "example": "any"
+                },
+                "expired_time": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
       }
     },
     "/v1/admin/promotions/{id}": {
@@ -587,6 +628,60 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/user/orderdetails/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "address": {
+                  "example": "any"
+                },
+                "details": {
+                  "example": "any"
+                },
+                "province": {
+                  "example": "any"
+                },
+                "district": {
+                  "example": "any"
+                },
+                "subdistrict": {
+                  "example": "any"
+                },
+                "working_time": {
+                  "example": "any"
+                },
+                "user_email": {
+                  "example": "any"
+                },
+                "status_id": {
+                  "example": "any"
+                },
+                "promotion_code": {
+                  "example": "any"
+                },
+                "sub_service_orders": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
