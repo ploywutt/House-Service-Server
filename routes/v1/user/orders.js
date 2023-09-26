@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
           email: currentLoginEmail,
         },
         status_id: {
-          in: [1, 2],
+          in: [1, 2, 4],
         },
       },
       select: {
