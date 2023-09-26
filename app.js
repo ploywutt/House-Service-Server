@@ -21,7 +21,6 @@ import userCategoriesRouter from "./routes/v1/user/categories.js";
 import userProfileRouter from "./routes/v1/user/profile.js";
 import employeeRouter from "./routes/v1/admin/employee.js";
 
-
 const app = express();
 const port = 4000;
 
