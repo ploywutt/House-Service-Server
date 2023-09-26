@@ -15,6 +15,17 @@ router.get("/", async (req, res) => {
       // },
       select: {
         order_id: true,
+        service_order: {
+          select: {
+            amount: true,
+            sub_service: {
+              select: {
+                sub_service_name: true,
+                unit: true,
+              },
+            },
+          },
+        },
         user: {
           select: {
             name: true,
