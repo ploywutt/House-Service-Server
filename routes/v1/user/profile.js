@@ -71,6 +71,7 @@ router.put("/", async (req, res) => {
 
       res.json({
         message: "Update successful!",
+        response,
       });
     } else {
       res.status(400).json({
