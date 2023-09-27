@@ -70,6 +70,7 @@ Table Promotions {
   quota Int
   discount_amount Int [not null]
   created_at DateTime [default: `now()`, not null]
+  updated_at DateTime
   expired_time DateTime [not null]
   use_count Int [not null]
   order Orders
