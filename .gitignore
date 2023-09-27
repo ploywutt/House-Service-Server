@@ -3,4 +3,4 @@ node_modules
 .env.example
 .vscode/*
 !.vscode/extensions.json
-
+settings.json
