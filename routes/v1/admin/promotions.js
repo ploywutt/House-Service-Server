@@ -74,10 +74,8 @@ router.post("/", async (req, res) => {
 	// #swagger.tags = ["Admin/Promotions"]
 	// #swagger.summary = "Create Promotion Code"
 	const {promotion_code, type, quota, discount_amount, expired_time} = req.body
-	const currentTime = new Date(expired_time)
-	console.log("Time from user -----> ", currentTime)
-	// const ex = new Date(currentTime.getTime() - currentTime.getTimezoneOffset() * 60000).toISOString()
-	// console.log(ex) 
+	const expiredTime = new Date(expired_time)
+	
 	try {
 		const existPromotion = await prisma.promotions.findUnique({
 			where: {
@@ -106,7 +104,10 @@ router.post("/", async (req, res) => {
 					created_at: new Date(
 						new Date().getTime() - new Date().getTimezoneOffset() * 60000
 					).toISOString(),
-					expired_time: new Date(currentTime.getTime() - currentTime.getTimezoneOffset() * 60000).toISOString(),
+					updated_at: new Date(
+						new Date().getTime() - new Date().getTimezoneOffset() * 60000
+					).toISOString(),
+					expired_time: new Date(expiredTime.getTime() - expiredTime.getTimezoneOffset() * 60000).toISOString(),
 					use_count: 0,
 				}
 			})
@@ -117,6 +118,51 @@ router.post("/", async (req, res) => {
 			message: "Cannot Create Promotion"
 		})
 	}
+})
+
+router.put("/:id", async (req, res) => {
+	// #swagger.tags = ["Admin/Promotions"]
+	// #swagger.summary = "Update Promotion Code"
+	const promotion_id = Number(req.params.id)
+	const { promotion_code, type, quota, discount_amount, expired_time } = req.body
+	try {
+		const existPromotion = await prisma.promotions.findUnique({
+			where: {
+				promotion_id,
+			}
+		})
+		if (!existPromotion) {
+			res.json({
+				message: `Cannot found promotion code id:${promotion_id}`
+			})
+		} else {
+			const expiredTime = new Date(expired_time)
+			await prisma.promotions.update({
+				where: {
+					promotion_id: promotion_id
+				},
+				data: {
+					promotion_code: promotion_code,
+					type: type,
+					discount_amount: +(discount_amount),
+					quota: +(quota),
+					updated_at: new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60000).toISOString(),
+					expired_time: new Date(expiredTime.getTime() - expiredTime.getTimezoneOffset() * 60000).toISOString(), 
+				}
+			}) 
+	 
+			res.json({
+				message: `Update promotion code id: ${promotion_id} success`
+			})
+		}
+
+	} catch (error) {
+		console.error(error) 
+		res.status(400).json({
+			message: error
+		})
+	}
+
 })
 
 export default router; 
