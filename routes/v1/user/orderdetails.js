@@ -20,7 +20,15 @@ router.post("/", async (req, res) => {
 
   //สร้าง order_id
   function generateOrderId() {
-    const newOrderId = "ORD" + Math.floor(Math.random() * 10000);
+    const currentDate = new Date();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // เดือน
+    const day = currentDate.getDate().toString().padStart(2, "0"); // วันที่
+    const randomDigits = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, "0");
+
+    const newOrderId = `ORD${month}${day}${randomDigits}`;
+
     return newOrderId;
   }
   const newOrderId = generateOrderId();
@@ -43,6 +51,31 @@ router.post("/", async (req, res) => {
     // }
     const userId = getUserId[0].id;
 
+    //หา id ช่าง
+    const totalEmployees = await prisma.Employee.count();
+
+    const getEmployeeId = await prisma.Order_Employee.findFirst({
+      orderBy: { order_employee_id: "desc" },
+      select: { employee_id: true },
+    });
+
+    const lastEmployeeId = getEmployeeId.employee_id;
+    let newEmployeeId;
+
+    if (lastEmployeeId < totalEmployees) {
+      console.log(lastEmployeeId + 1);
+      newEmployeeId = lastEmployeeId + 1;
+    } else {
+      console.log("restart", 1);
+      newEmployeeId = 1;
+    }
+
+    //สร้าง order_employee_id
+    const latestOrderEmployeeId = await prisma.Order_Employee.findFirst({
+      orderBy: { order_employee_id: "desc" },
+    });
+    const newOrderEmployeeId = latestOrderEmployeeId.order_employee_id + 1;
+
     const orderDetail = await prisma.Order_details.create({
       data: {
         address,
@@ -59,9 +92,16 @@ router.post("/", async (req, res) => {
             promotion_code,
           },
         },
+        order_employee: {
+          create: {
+            order_employee_id: newOrderEmployeeId,
+            employee_id: newEmployeeId,
+          },
+        },
       },
     });
 
+    //สร้าง subservice orders
     const serviceOrders = await Promise.all(
       sub_service_orders.map(async (subServiceOrder, index) => {
         const { sub_service_name, count } = subServiceOrder;
