@@ -567,6 +567,28 @@
         }
       }
     },
+    "/v1/user/promotions/{id}": {
+      "get": {
+        "tags": [
+          "Admin/Promotions"
+        ],
+        "summary": "Get Promotion code by id",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/user/products/": {
       "get": {
         "tags": [
