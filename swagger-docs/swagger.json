@@ -7,11 +7,15 @@
   },
   "host": "localhost:4000",
   "basePath": "/",
-  "schemes": ["http"],
+  "schemes": [
+    "http"
+  ],
   "paths": {
     "/v1/admin/categories/": {
       "get": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Get all categories",
         "description": "",
         "parameters": [
@@ -28,7 +32,9 @@
         }
       },
       "post": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Create categories",
         "description": "",
         "parameters": [
@@ -58,7 +64,9 @@
         }
       },
       "put": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Update categorie by drag & drop",
         "description": "",
         "parameters": [
@@ -87,7 +95,9 @@
     },
     "/v1/admin/categories/{id}": {
       "get": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Get categories by id",
         "description": "",
         "parameters": [
@@ -105,7 +115,9 @@
         }
       },
       "delete": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Delete categories by id",
         "description": "",
         "parameters": [
@@ -126,7 +138,9 @@
         }
       },
       "put": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Update categorie by id",
         "description": "",
         "parameters": [
@@ -161,7 +175,9 @@
     },
     "/v1/admin/services/": {
       "get": {
-        "tags": ["Admin/Service"],
+        "tags": [
+          "Admin/Service"
+        ],
         "summary": "Get all services",
         "description": "",
         "parameters": [
@@ -201,7 +217,9 @@
         }
       },
       "post": {
-        "tags": ["Admin/Service"],
+        "tags": [
+          "Admin/Service"
+        ],
         "summary": "Create services",
         "description": "",
         "parameters": [
@@ -237,7 +255,9 @@
         }
       },
       "put": {
-        "tags": ["Admin/Service"],
+        "tags": [
+          "Admin/Service"
+        ],
         "summary": "Update services",
         "description": "",
         "parameters": [
@@ -278,7 +298,9 @@
     },
     "/v1/admin/services/{id}": {
       "get": {
-        "tags": ["Admin/Service"],
+        "tags": [
+          "Admin/Service"
+        ],
         "summary": "Get service by id",
         "description": "",
         "parameters": [
@@ -296,7 +318,9 @@
         }
       },
       "delete": {
-        "tags": ["Admin/Service"],
+        "tags": [
+          "Admin/Service"
+        ],
         "summary": "Delete service by id",
         "description": "",
         "parameters": [
@@ -319,7 +343,9 @@
     },
     "/v1/admin/promotions/": {
       "get": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Get all Promotion Code",
         "description": "",
         "parameters": [
@@ -336,7 +362,9 @@
         }
       },
       "post": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Create Promotion Code",
         "description": "",
         "parameters": [
@@ -377,7 +405,9 @@
     },
     "/v1/admin/promotions/{id}": {
       "get": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Get Promotion code by id",
         "description": "",
         "parameters": [
@@ -395,7 +425,9 @@
         }
       },
       "delete": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Delete Promotion Code by id",
         "description": "",
         "parameters": [
@@ -413,7 +445,9 @@
         }
       },
       "put": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Update Promotion Code",
         "description": "",
         "parameters": [
@@ -480,7 +514,9 @@
     },
     "/v1/employee/": {
       "get": {
-        "tags": ["Admin/Category"],
+        "tags": [
+          "Admin/Category"
+        ],
         "summary": "Get all categories",
         "description": "",
         "parameters": [
@@ -572,7 +608,9 @@
     },
     "/v1/user/promotions/{id}": {
       "get": {
-        "tags": ["Admin/Promotions"],
+        "tags": [
+          "Admin/Promotions"
+        ],
         "summary": "Get Promotion code by id",
         "description": "",
         "parameters": [
@@ -592,7 +630,9 @@
     },
     "/v1/user/products/": {
       "get": {
-        "tags": ["User/Products"],
+        "tags": [
+          "User/Products"
+        ],
         "summary": "Get all products",
         "description": "",
         "responses": {
@@ -604,7 +644,9 @@
     },
     "/v1/user/products/{id}": {
       "get": {
-        "tags": ["User/Products"],
+        "tags": [
+          "User/Products"
+        ],
         "summary": "Get products by id",
         "description": "",
         "parameters": [
@@ -624,7 +666,9 @@
     },
     "/register/": {
       "post": {
-        "tags": ["User/Register"],
+        "tags": [
+          "User/Register"
+        ],
         "summary": "Create user profile",
         "description": "",
         "parameters": [
@@ -665,7 +709,9 @@
     },
     "/v1/user/subservices/{id}": {
       "get": {
-        "tags": ["User/Service"],
+        "tags": [
+          "User/Service"
+        ],
         "summary": "Get sub-service by id",
         "description": "",
         "parameters": [
@@ -839,7 +885,9 @@
     },
     "/v1/user/services/": {
       "get": {
-        "tags": ["User/Service"],
+        "tags": [
+          "User/Service"
+        ],
         "summary": "Get all services",
         "description": "",
         "parameters": [
@@ -908,7 +956,9 @@
     },
     "/v1/user/categories/": {
       "get": {
-        "tags": ["User/Categories"],
+        "tags": [
+          "User/Categories"
+        ],
         "summary": "Get all categories",
         "description": "",
         "responses": {
