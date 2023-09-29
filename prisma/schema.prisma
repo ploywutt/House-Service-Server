@@ -124,6 +124,7 @@ model Employee {
   name           String
   created_at     DateTime         @default(now())
   updated_at     DateTime         @updatedAt
+  email          String?
   order_employee Order_Employee[]
 }
 
@@ -160,4 +161,11 @@ model thai_tambons {
   updated_at    String?
   deleted_at    String?
   thai_amphures thai_amphures @relation(fields: [amphure_id], references: [id])
+}
+
+model Admin {
+  id            Int         @id
+  name          String
+  email         String
+  created_at    DateTime         @default(now())
 }
