@@ -494,10 +494,19 @@
     },
     "/v1/admin/login/": {
       "get": {
+        "tags": [
+          "Admin/Login"
+        ],
+        "summary": "Get Admin/Technician by Email",
         "description": "",
         "parameters": [
           {
             "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "role",
             "in": "query",
             "type": "string"
           }

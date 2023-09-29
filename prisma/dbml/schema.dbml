@@ -110,6 +110,7 @@ Table Employee {
   name String [not null]
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+  email String
   order_employee Order_Employee [not null]
 }
 
@@ -146,6 +147,13 @@ Table thai_tambons {
   updated_at String
   deleted_at String
   thai_amphures thai_amphures [not null]
+}
+
+Table Admin {
+  id Int [pk]
+  name String [not null]
+  email String [not null]
+  created_at DateTime [default: `now()`, not null]
 }
 
 Ref: Services.category_id > Categories.id [delete: Cascade]
