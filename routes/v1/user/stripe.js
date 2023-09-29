@@ -1,22 +1,27 @@
 import { Router } from "express";
 import stripe from "stripe";
-
+import dotenv from  "dotenv";
+dotenv.config()
 const router = Router();
 
 const stripeClient = stripe(
-  "sk_test_51NoyonCDxlniS9dC0pfFFKWXlWzYGlhdhWd232VlZOI9hWJxfiz8qntF1gHUFRqBBHYBwNkyGD8jO2MPRR0kwmZj00Z45tqz9C"
+  process.env.SECRET_KEY
 );
 
 router.post("/", async (req, res) => {
+
+  const {price} = req.body
+ 
   try {
-    const totalprice = price * 100;
+    
     const paymentIntent = await stripeClient.paymentIntents.create({
-      amount: totalprice,
+      amount: 100000,
       currency: "thb",
       automatic_payment_methods: {
         enabled: true,
       },
     });
+    // console.log("hello")
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
@@ -26,6 +31,7 @@ router.post("/", async (req, res) => {
       error,
     });
   }
+ 
 });
 
 export default router;
