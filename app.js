@@ -21,7 +21,8 @@ import userCategoriesRouter from "./routes/v1/user/categories.js";
 import userProfileRouter from "./routes/v1/user/profile.js";
 import employeeRouter from "./routes/v1/admin/employee.js";
 import testRouter from "./routes/v1/user/test.js";
-
+import usercodeRouter from "./routes/v1/user/promotions.js";
+import stripePayment from "./routes/v1/user/stripe.js";
 const app = express();
 const port = 4000;
 
@@ -36,6 +37,7 @@ app.use("/v1/admin/login", loginAdmin);
 
 app.use("/v1/employee", employeeRouter);
 
+app.use("/v1/user/promotions", usercodeRouter);
 app.use("/v1/user/products", v1UserProductRouter);
 app.use("/register", registerRouter);
 app.use("/v1/user/subservices", subserviceRouter);
@@ -47,6 +49,7 @@ app.use("/v1/user/services", userServicesRouter);
 app.use("/v1/user/categories", userCategoriesRouter);
 app.use("/v1/user/profile", userProfileRouter);
 app.use("/v1/user/test", testRouter);
+app.use("/create-payment-intent", stripePayment);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
