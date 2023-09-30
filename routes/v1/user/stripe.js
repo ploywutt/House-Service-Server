@@ -1,12 +1,11 @@
 import { Router } from "express";
 import stripe from "stripe";
-import dotenv from  "dotenv";
-dotenv.config()
-const router = Router();
+import dotenv from "dotenv";
 
-const stripeClient = stripe(
-  process.env.SECRET_KEY
-);
+const stripeSecretKey = process.env.SECRET_KEY;
+const stripeClient = stripe(stripeSecretKey);
+
+const router = Router();
 
 router.post("/", async (req, res) => {
 
