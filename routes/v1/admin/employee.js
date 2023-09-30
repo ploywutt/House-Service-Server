@@ -277,4 +277,68 @@ router.get("/success", async (req, res) => {
   }
 });
 
+// //////////////////////////////////////////////
+
+router.get("/namechang", async (req, res) => {
+  // const employeeId = req.query.employee_Id;
+  try {
+    const name = await prisma.employee.findUnique({
+      where: {
+        employee_id: 6,
+      },
+      select: {
+        name: true,
+        order_employee: {
+          select: {
+            order_detail: {
+              select: {
+                working_time: true,
+                address: true,
+                subdistrict: true,
+                district: true,
+                province: true,
+                details: true,
+                order: {
+                  select: {
+                    user: {
+                      select: {
+                        name: true,
+                        phone: true,
+                        email: true,
+                      },
+                    },
+                    order_id: true,
+                    status_id: true,
+                    service_order: {
+                      select: {
+                        sub_service: {
+                          select: {
+                            sub_service_name: true,
+                          },
+                        },
+                      },
+                    },
+                  },
+                  where: {
+                    status_id: 1, // เงื่อนไขที่คุณต้องการ (status_id เท่ากับ 1)
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+    return res.json({
+      name,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "error",
+      error,
+    });
+  }
+});
+
 export default router;
