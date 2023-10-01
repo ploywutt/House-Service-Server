@@ -284,8 +284,8 @@ router.put("/", async (req, res) => {
 			where: { service_id: Number(id) },
 		});
 
-		console.log(`existingData:`, existingData)
-		console.log(`items:`, items)
+		// console.log(`existingData:`, existingData)
+		// console.log(`items:`, items)
 
 		for (const item of existingData) {
 			// ตรวจสอบว่ามีข้อมูลใหม่สำหรับอัพเดตหรือไม่
