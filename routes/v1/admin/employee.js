@@ -65,13 +65,16 @@ router.get("/", async (req, res) => {
 router.put("/status/towork", async (req, res) => {
   const orderId = req.query.orderId;
   try {
-    await prisma.orders.update({
+    const toWorking = await prisma.orders.update({
       where: {
         order_id: orderId,
       },
       data: {
         status_id: 2,
       },
+    });
+    res.json({
+      data: toWorking,
     });
   } catch (error) {
     console.error(error);
@@ -86,13 +89,16 @@ router.put("/status/tofinish", async (req, res) => {
   const orderId = req.query.orderId;
   console.log("Update status orderID:", orderId);
   try {
-    await prisma.orders.update({
+    const toFinish = await prisma.orders.update({
       where: {
         order_id: orderId,
       },
       data: {
         status_id: 3,
       },
+    });
+    res.json({
+      data: toFinish,
     });
   } catch (error) {
     console.error(error);
@@ -146,7 +152,9 @@ router.get("/comingwork", async (req, res) => {
         },
       },
       orderBy: {
-        created_at: "asc",
+        order_detail: {
+          working_time: "asc",
+        },
       },
     });
     res.json({
@@ -204,7 +212,9 @@ router.get("/working", async (req, res) => {
         },
       },
       orderBy: {
-        created_at: "asc",
+        order_detail: {
+          working_time: "asc",
+        },
       },
     });
     res.json({
@@ -262,7 +272,9 @@ router.get("/success", async (req, res) => {
         },
       },
       orderBy: {
-        created_at: "asc",
+        order_detail: {
+          working_time: "desc",
+        },
       },
     });
     res.json({
