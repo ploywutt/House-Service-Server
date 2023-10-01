@@ -62,6 +62,8 @@ model Orders {
   status_id       Int              @default(1)
   order_detail_id Int              @unique
   promotion_code  String?          @unique
+  totalprice      Int?
+  stripe_id       String?
   created_at      DateTime         @default(now())
   updated_at      DateTime         @updatedAt
   order_detail    Order_details    @relation(fields: [order_detail_id], references: [order_detail_id])
