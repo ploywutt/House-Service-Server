@@ -48,6 +48,8 @@ Table Orders {
   status_id Int [not null, default: 1]
   order_detail_id Int [unique, not null]
   promotion_code String [unique]
+  totalprice Int
+  stripe_id String
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
   order_detail Order_details [not null]
