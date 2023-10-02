@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       select: { employee_id: true },
     });
 
-    const lastEmployeeId = getEmployeeId.employee_id;
+    const lastEmployeeId = !getEmployeeId ? 0 : getEmployeeId.employee_id;
     let newEmployeeId;
 
     if (lastEmployeeId < totalEmployees) {
@@ -74,7 +74,13 @@ router.post("/", async (req, res) => {
     const latestOrderEmployeeId = await prisma.Order_Employee.findFirst({
       orderBy: { order_employee_id: "desc" },
     });
-    const newOrderEmployeeId = latestOrderEmployeeId.order_employee_id + 1;
+
+    let newOrderEmployeeId;
+    if (latestOrderEmployeeId) {
+      newOrderEmployeeId = latestOrderEmployeeId.order_employee_id + 1;
+    } else {
+      newOrderEmployeeId = 1;
+    }
 
     const orderDetail = await prisma.Order_details.create({
       data: {
@@ -108,10 +114,16 @@ router.post("/", async (req, res) => {
 
         //สร้าง service_order_id
         if (count > 0) {
-          const latestServiceOrder = await prisma.Service_Order.findFirst({
+          const getServiceOrder = await prisma.Service_Order.findFirst({
             orderBy: { service_order_id: "desc" },
+            select: { service_order_id: true },
           });
-          const newServiceOrderId = latestServiceOrder.service_order_id + 1;
+
+          const latestServiceOrder = !getServiceOrder
+            ? 0
+            : getServiceOrder.service_order_id;
+
+          const newServiceOrderId = latestServiceOrder + 1;
 
           //หา id ของ subservice
           const getSubServiceId = await prisma.Sub_services.findMany({
