@@ -59,7 +59,7 @@ router.post("/", async (req, res) => {
       select: { employee_id: true },
     });
 
-    const lastEmployeeId = getEmployeeId.employee_id;
+    const lastEmployeeId = !getEmployeeId ? 0 : getEmployeeId.employee_id;
     let newEmployeeId;
 
     if (lastEmployeeId < totalEmployees) {
@@ -74,7 +74,13 @@ router.post("/", async (req, res) => {
     const latestOrderEmployeeId = await prisma.Order_Employee.findFirst({
       orderBy: { order_employee_id: "desc" },
     });
-    const newOrderEmployeeId = latestOrderEmployeeId.order_employee_id + 1;
+
+    let newOrderEmployeeId;
+    if (latestOrderEmployeeId) {
+      newOrderEmployeeId = latestOrderEmployeeId.order_employee_id + 1;
+    } else {
+      newOrderEmployeeId = 1;
+    }
 
     const orderDetail = await prisma.Order_details.create({
       data: {
