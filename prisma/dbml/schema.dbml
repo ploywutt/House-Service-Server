@@ -48,10 +48,10 @@ Table Orders {
   status_id Int [not null, default: 1]
   order_detail_id Int [unique, not null]
   promotion_code String [unique]
-  totalprice Int
-  stripe_id String
   created_at DateTime [default: `now()`, not null]
   updated_at DateTime [not null]
+  stripe_id String
+  totalprice Int
   order_detail Order_details [not null]
   promotion Promotions
   status Status [not null]
@@ -72,20 +72,20 @@ Table Promotions {
   quota Int
   discount_amount Int [not null]
   created_at DateTime [default: `now()`, not null]
-  updated_at DateTime
   expired_time DateTime [not null]
   use_count Int [not null]
+  updated_at DateTime
   order Orders
 }
 
 Table Order_details {
-  order_detail_id Int [pk, increment]
-  working_time DateTime [not null]
   address String [not null]
-  subdistrict String [not null]
-  district String [not null]
-  province String [not null]
   details String
+  district String [not null]
+  order_detail_id Int [pk, increment]
+  province String [not null]
+  subdistrict String [not null]
+  working_time DateTime [not null]
   order_employee Order_Employee [not null]
   order Orders
 }
