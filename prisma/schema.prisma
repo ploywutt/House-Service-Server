@@ -102,8 +102,6 @@ model Order_details {
   working_time    DateTime
   order_employee  Order_Employee[]
   order           Orders?
-  
-  @@unique([order_detail_id])
 }
 
 model Service_Order {
