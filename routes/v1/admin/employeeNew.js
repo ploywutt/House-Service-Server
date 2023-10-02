@@ -2,6 +2,31 @@ import { Router } from "express";
 import { prisma } from "../../../lib/db.js";
 const router = new Router();
 
+router.get("/name", async (req, res) => {
+  const employeeEmail = req.query.email;
+  console.log("/name:", employeeEmail);
+
+  try {
+    const name = await prisma.employee.findMany({
+      where: {
+        email: employeeEmail,
+      },
+      select: {
+        name: true,
+      },
+    });
+    return res.json({
+      name,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({
+      message: "error",
+      error,
+    });
+  }
+});
+
 router.get("/comingwork", async (req, res) => {
   const employeeEmail = req.query.email;
   console.log("/comingwork:", employeeEmail);

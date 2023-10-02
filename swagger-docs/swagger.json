@@ -662,6 +662,26 @@
         }
       }
     },
+    "/v2/employee/name": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/v2/employee/comingwork": {
       "get": {
         "description": "",
