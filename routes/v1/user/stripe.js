@@ -4,33 +4,31 @@ import dotenv from "dotenv";
 
 const stripeSecretKey = process.env.SECRET_KEY;
 const stripeClient = stripe(stripeSecretKey);
-
 const router = Router();
 
 router.post("/", async (req, res) => {
-
-  const {price} = req.body
- 
   try {
-    
+    const price = req.body.price;
+
+    console.log("Received request with price:", price);
+
     const paymentIntent = await stripeClient.paymentIntents.create({
-      amount: 100000,
+      amount: price * 100,
       currency: "thb",
       automatic_payment_methods: {
         enabled: true,
       },
     });
-    // console.log("hello")
-    res.send({
+
+    res.status(200).json({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error) {
-    res.status(400).json({
-      message: "Stripe Error",
-      error,
+    console.error("Error creating payment intent:", error);
+    res.status(500).json({
+      message: "Internal Server Error",
     });
   }
- 
 });
 
 export default router;
