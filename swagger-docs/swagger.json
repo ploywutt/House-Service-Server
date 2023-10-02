@@ -1212,6 +1212,28 @@
         }
       }
     },
+    "/v1/user/profile/passwordcheck": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/v1/user/test/": {
       "get": {
         "description": "",

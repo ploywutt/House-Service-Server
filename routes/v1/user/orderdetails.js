@@ -110,7 +110,7 @@ router.post("/", async (req, res) => {
     //สร้าง subservice orders
     const serviceOrders = await Promise.all(
       sub_service_orders.map(async (subServiceOrder, index) => {
-        const { sub_service_name, count } = subServiceOrder;
+        const { name, count } = subServiceOrder;
 
         //สร้าง service_order_id
         if (count > 0) {
@@ -128,7 +128,7 @@ router.post("/", async (req, res) => {
           //หา id ของ subservice
           const getSubServiceId = await prisma.Sub_services.findMany({
             where: {
-              sub_service_name,
+              sub_service_name: name,
             },
             select: {
               id: true,

@@ -105,4 +105,17 @@ router.put("/", async (req, res) => {
   }
 });
 
+router.get("/passwordcheck", async (req, res) => {
+  try {
+    const email = req.query.email;
+    const password = req.query.password;
+  } catch (error) {
+    console.error(error);
+    res.json({
+      message: "Error matching password:",
+      error,
+    });
+  }
+});
+
 export default router;
