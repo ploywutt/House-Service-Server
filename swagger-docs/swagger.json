@@ -585,6 +585,13 @@
     "/v1/employee/comingwork": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -598,6 +605,13 @@
     "/v1/employee/working": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -611,6 +625,13 @@
     "/v1/employee/success": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -624,6 +645,113 @@
     "/v1/employee/namechang": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/employee/comingwork": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/employee/status/towork": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/employee/working": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/employee/status/tofinish": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/employee/success": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

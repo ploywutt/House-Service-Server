@@ -87,6 +87,7 @@ router.put("/status/towork", async (req, res) => {
 
 router.put("/status/tofinish", async (req, res) => {
   const orderId = req.query.orderId;
+
   console.log("Update status orderID:", orderId);
   try {
     const toFinish = await prisma.orders.update({
@@ -110,6 +111,8 @@ router.put("/status/tofinish", async (req, res) => {
 });
 
 router.get("/comingwork", async (req, res) => {
+  const employeeEmail = req.query.email;
+  console.log("/comingwork", employeeEmail);
   try {
     const comingwork = await prisma.orders.findMany({
       where: {
@@ -148,6 +151,11 @@ router.get("/comingwork", async (req, res) => {
             district: true,
             province: true,
             details: true,
+            order_employee: {
+              employee: {
+                where: employeeEmail,
+              },
+            },
           },
         },
       },
@@ -170,6 +178,8 @@ router.get("/comingwork", async (req, res) => {
 });
 
 router.get("/working", async (req, res) => {
+  const employeeEmail = req.query.email;
+  console.log("/working", employeeEmail);
   try {
     const working = await prisma.orders.findMany({
       where: {
@@ -208,6 +218,11 @@ router.get("/working", async (req, res) => {
             district: true,
             province: true,
             details: true,
+            order_employee: {
+              employee: {
+                where: employeeEmail,
+              },
+            },
           },
         },
       },
@@ -216,6 +231,9 @@ router.get("/working", async (req, res) => {
           working_time: "asc",
         },
       },
+    });
+    res.json({
+      data: comingwork,
     });
     res.json({
       data: working,
@@ -230,6 +248,9 @@ router.get("/working", async (req, res) => {
 });
 
 router.get("/success", async (req, res) => {
+  const employeeEmail = req.query.email;
+  console.log("/success", employeeEmail);
+
   try {
     const success = await prisma.orders.findMany({
       where: {
@@ -268,14 +289,22 @@ router.get("/success", async (req, res) => {
             district: true,
             province: true,
             details: true,
+            order_employee: {
+              employee: {
+                where: employeeEmail,
+              },
+            },
           },
         },
       },
       orderBy: {
         order_detail: {
-          working_time: "desc",
+          working_time: "asc",
         },
       },
+    });
+    res.json({
+      data: comingwork,
     });
     res.json({
       data: success,
@@ -292,11 +321,12 @@ router.get("/success", async (req, res) => {
 // //////////////////////////////////////////////
 
 router.get("/namechang", async (req, res) => {
+  const employeeEmail = req.query.email;
   // const employeeId = req.query.employee_Id;
   try {
-    const name = await prisma.employee.findUnique({
+    const name = await prisma.employee.findMany({
       where: {
-        employee_id: 6,
+        email: employeeEmail,
       },
       select: {
         name: true,

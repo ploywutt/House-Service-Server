@@ -42,7 +42,7 @@ model Categories {
   category_name String
   createAt      DateTime   @default(now())
   updateAt      DateTime   @updatedAt
-  recommend     Int?       
+  recommend     Int?
   services      Services[]
 }
 
@@ -62,10 +62,10 @@ model Orders {
   status_id       Int              @default(1)
   order_detail_id Int              @unique
   promotion_code  String?          @unique
-  totalprice      Int?
-  stripe_id       String?
   created_at      DateTime         @default(now())
   updated_at      DateTime         @updatedAt
+  stripe_id       String?
+  totalprice      Int?
   order_detail    Order_details    @relation(fields: [order_detail_id], references: [order_detail_id])
   promotion       Promotions?      @relation(fields: [promotion_code], references: [promotion_code])
   status          Status           @relation(fields: [status_id], references: [status_id])
@@ -80,26 +80,26 @@ model Status {
 }
 
 model Promotions {
-  promotion_id    Int      @id @default(autoincrement())
-  promotion_code  String   @unique
+  promotion_id    Int       @id @default(autoincrement())
+  promotion_code  String    @unique
   type            String
   quota           Int?
   discount_amount Int
   created_at      DateTime  @default(now())
-  updated_at      DateTime? @updatedAt 
   expired_time    DateTime
   use_count       Int
+  updated_at      DateTime? @updatedAt
   order           Orders?
 }
 
 model Order_details {
-  order_detail_id Int              @id @default(autoincrement())
-  working_time    DateTime
   address         String
-  subdistrict     String
-  district        String
-  province        String
   details         String?
+  district        String
+  order_detail_id Int              @id @default(autoincrement())
+  province        String
+  subdistrict     String
+  working_time    DateTime
   order_employee  Order_Employee[]
   order           Orders?
 }
@@ -166,8 +166,8 @@ model thai_tambons {
 }
 
 model Admin {
-  id            Int         @id
-  name          String
-  email         String
-  created_at    DateTime         @default(now())
+  id         Int      @id
+  name       String
+  email      String
+  created_at DateTime @default(now())
 }
