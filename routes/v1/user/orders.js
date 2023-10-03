@@ -17,6 +17,8 @@ router.get("/", async (req, res) => {
       },
       select: {
         order_id: true,
+        totalprice: true,
+        promotion_code: true,
         order_detail: {
           select: {
             working_time: true,
@@ -54,6 +56,7 @@ router.get("/", async (req, res) => {
           },
         },
       },
+      orderBy: { created_at: "desc" },
     });
 
     res.json({

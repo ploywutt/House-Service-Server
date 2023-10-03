@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { prisma } from "../../../lib/db.js";
+import { compare } from "bcrypt";
 const router = new Router();
 
 router.get("/", async (req, res) => {
@@ -78,23 +79,6 @@ router.put("/", async (req, res) => {
         message: "Current password is incorrect. Cannot update the password.",
       });
     }
-    //   const response = await prisma.customer_profile.update(
-    //     {
-    //       where: {
-    //         email: currentLoginEmail,
-    //       },
-    //       data: {
-    //         name: name !== "" ? name : undefined,
-    //         phone: phone !== "" ? phone : undefined,
-    //         email: email !== "" ? email : undefined,
-    //         password: password !== "" ? password : undefined,
-    //         avatar_url: avatar_url !== "" ? avatar_url : undefined,
-    //       },
-    //     },
-    //     res.json({
-    //       message: "update successfully!",
-    //     })
-    //   );
   } catch (error) {
     console.log(`edit put ${error}`);
 
@@ -109,11 +93,37 @@ router.get("/passwordcheck", async (req, res) => {
   try {
     const email = req.query.email;
     const password = req.query.password;
+    console.log(email, password);
+
+    const getHashPassword = await prisma.Customer_profile.findMany({
+      where: {
+        email: email,
+      },
+      select: {
+        password: true,
+      },
+    });
+    console.log("getHashPassword", getHashPassword[0].password);
+
+    const passwordMatch = await compare(password, getHashPassword[0].password);
+
+    console.log("passwordMatch", passwordMatch);
+
+    if (!passwordMatch) {
+      return res.status(401).json({
+        message: "Password does not match",
+      });
+    } else {
+      return res.status(200).json({
+        message: "Login successful",
+        data: passwordMatch,
+      });
+    }
   } catch (error) {
     console.error(error);
-    res.json({
+    res.status(500).json({
       message: "Error matching password:",
-      error,
+      error: error.message,
     });
   }
 });
