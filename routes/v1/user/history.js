@@ -56,6 +56,7 @@ router.get("/", async (req, res) => {
           },
         },
       },
+      orderBy: { created_at: "desc" },
     });
 
     res.json({
