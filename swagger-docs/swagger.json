@@ -1010,6 +1010,9 @@
                 },
                 "sub_service_orders": {
                   "example": "any"
+                },
+                "totalprice": {
+                  "example": "any"
                 }
               }
             }

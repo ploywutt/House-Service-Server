@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
     status_id,
     promotion_code,
     sub_service_orders,
+    totalprice,
   } = req.body;
 
   //สร้าง order_id
@@ -96,6 +97,7 @@ router.post("/", async (req, res) => {
             user_id: userId,
             status_id,
             promotion_code,
+            totalprice,
           },
         },
         order_employee: {
@@ -134,7 +136,7 @@ router.post("/", async (req, res) => {
               id: true,
             },
           });
-          const subServiceId = getSubServiceId[index].id;
+          const subServiceId = getSubServiceId[0].id;
 
           return prisma.Service_Order.create({
             data: {
