@@ -53,6 +53,12 @@ app.use("/v1/user/profile", userProfileRouter);
 app.use("/v1/user/test", testRouter);
 app.use("/create-payment-intent", stripePayment);
 
+app.get("/", (req, res) => {
+  res.send(
+    "HomeServices server is activated. Please do not close this window during using HomeServices Webpage. Thank you so much :)"
+  );
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
